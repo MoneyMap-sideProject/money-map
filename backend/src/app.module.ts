@@ -10,7 +10,7 @@ import { UserModule } from './user/user.module';
     }),
     // 추후 TypeORMModule 등 추가 예정
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule, UserModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),
