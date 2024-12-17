@@ -1,5 +1,14 @@
 # local 실행 방법
 
+## .env
+
+```bash
+# env 파일 생성
+$ touch .env
+```
+
+env 파일에 추가할 내용은 notion 참고
+
 ## Installation
 
 ```bash
