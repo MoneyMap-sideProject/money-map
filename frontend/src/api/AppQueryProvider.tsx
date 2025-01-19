@@ -5,9 +5,9 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-interface Props {
+type Props = {
   children: ReactNode;
-}
+};
 
 const queryClient = new QueryClient();
 

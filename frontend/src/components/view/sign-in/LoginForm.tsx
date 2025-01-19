@@ -10,9 +10,9 @@ import InputErrorMessage from '../../ui/InputErrorMessage';
 import AuthButtonContainer from '../../ui/auth/AuthButtonContainer';
 import AuthButton from '../../ui/auth/AuthButton';
 
-interface FormInput {
+type FormInput = {
   email: Email;
-}
+};
 
 export default function LoginForm() {
   const {

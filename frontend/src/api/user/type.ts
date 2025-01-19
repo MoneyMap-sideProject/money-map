@@ -2,22 +2,22 @@ export type Email = string;
 export type Time = string;
 export type Id = number;
 
-export interface CreateUserRequestBody {
+export type CreateUserRequestBody = {
   email: Email;
-}
+};
 
-export interface CreateUserResponseBody {
+export type CreateUserResponseBody = {
   createdAt: Time;
   email: Email;
   id: Id;
-}
+};
 
-export interface LoginRequestBody {
+export type LoginRequestBody = {
   email: Email;
-}
+};
 
-export interface LoginReponseBody {
+export type LoginReponseBody = {
   createdAt: Time;
   email: Email;
   id: Id;
-}
+};

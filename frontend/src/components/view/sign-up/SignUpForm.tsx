@@ -10,9 +10,9 @@ import AuthButtonContainer from '../../ui/auth/AuthButtonContainer';
 import AuthButton from '../../ui/auth/AuthButton';
 import { useNavigate } from '@tanstack/react-router';
 
-interface FormInput {
+type FormInput = {
   email: Email;
-}
+};
 
 export default function SignUpForm() {
   const navigate = useNavigate();
