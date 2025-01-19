@@ -12,4 +12,7 @@ export default defineConfig({
       include: '**/*.svg?react',
     }),
   ],
+  server: {
+    port: 8080,
+  },
 });
