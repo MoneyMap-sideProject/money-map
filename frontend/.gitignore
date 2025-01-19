@@ -25,3 +25,6 @@ dist-ssr
 
 # Ignore generated route tree
 **/routeTree.gen.ts
+
+# env
+.env
