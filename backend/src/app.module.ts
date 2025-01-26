@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { FinancialModule } from './financial/financial.module';
 
 @Module({
   imports: [
@@ -10,7 +11,7 @@ import { UserModule } from './user/user.module';
     }),
     // 추후 TypeORMModule 등 추가 예정
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule, UserModule],
+      imports: [ConfigModule, UserModule, FinancialModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),
