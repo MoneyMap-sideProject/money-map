@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity/user.entity';
@@ -10,25 +14,75 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  createUser(email: string) {
-    const user = this.userRepository.create({ email });
-    return this.userRepository.save(user);
-  }
+  /**
+   * Creates a new user
+   * @param email - The email of the new user
+   * @returns The created user
+   */
+  async createUser(email: string) {
+    if (!email) {
+      throw new BadRequestException('Email is required.');
+    }
 
-  findAll() {
-    return this.userRepository.find();
-  }
-
-  async login(email: string) {
-    const user = await this.userRepository.findOne({
+    const existingUser = await this.userRepository.findOne({
       where: { email },
     });
-    if (!user) {
-      throw new Error('User not found');
+
+    if (existingUser) {
+      throw new BadRequestException('A user with this email already exists.');
     }
-    // if (user.password !== password) {
-    //     throw new Error('Password not matched');
-    // }
-    return user;
+
+    const user = this.userRepository.create({ email });
+
+    try {
+      return await this.userRepository.save(user);
+    } catch (error) {
+      throw new BadRequestException(
+        'Failed to create the user. Please try again.',
+      );
+    }
+  }
+
+  /**
+   * Retrieves all users
+   * @returns A list of all users
+   */
+  async findAll() {
+    try {
+      const users = await this.userRepository.find();
+      if (users.length === 0) {
+        throw new NotFoundException('No users found.');
+      }
+      return users;
+    } catch (error) {
+      throw new BadRequestException('Failed to retrieve users.');
+    }
+  }
+
+  /**
+   * Logs in a user by email
+   * @param email - The email of the user
+   * @returns The logged-in user
+   */
+  async login(email: string) {
+    if (!email) {
+      throw new BadRequestException('Email is required.');
+    }
+
+    try {
+      const user = await this.userRepository.findOne({
+        where: { email },
+      });
+
+      if (!user) {
+        throw new NotFoundException('User with this email does not exist.');
+      }
+
+      return user;
+    } catch (error) {
+      throw new BadRequestException(
+        'Failed to log in the user. Please try again.',
+      );
+    }
   }
 }
