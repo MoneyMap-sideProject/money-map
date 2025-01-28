@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { useCreateUserMutation } from '../../../api/user/hooks';
 import { Email } from '../../../api/user/type';
 import AuthForm from '../../ui/auth/AuthForm';
 import InputLabel from '../../ui/InputLabel';
@@ -9,6 +8,8 @@ import InputErrorMessage from '../../ui/InputErrorMessage';
 import AuthButtonContainer from '../../ui/auth/AuthButtonContainer';
 import AuthButton from '../../ui/auth/AuthButton';
 import { useNavigate } from '@tanstack/react-router';
+import useCreateUserMutation from '../../../api/user/hooks/useCreateUserMutation';
+import { toast } from 'react-toastify';
 
 type FormInput = {
   email: Email;
@@ -34,10 +35,15 @@ export default function SignUpForm() {
       onSuccess: (data) => {
         console.log('[회원가입 성공]', data);
         navigate({ to: '/auth/sign-in' });
-        // TODO: toast 알림
+        toast('회원가입 성공!', {
+          autoClose: 1500,
+        });
       },
       onError: (error) => {
         console.error(error);
+        toast('회원가입에 실패했습니다.', {
+          autoClose: 1500,
+        });
         // TODO: 에러 처리
       },
     });
