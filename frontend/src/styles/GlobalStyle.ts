@@ -14,6 +14,12 @@ const resetTemplateLiteral = `
 `;
 
 const globalStyleTemplateLiteral = `
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   body,
   input,
   select,
