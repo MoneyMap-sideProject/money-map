@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { useMatchRoute } from '@tanstack/react-router';
-import PencilIcon from '../../../../assets/svgs/pencil.svg?react';
-import OutIcon from '../../../../assets/svgs/out.svg?react';
-import GrapoIcon from '../../../../assets/svgs/graph.svg?react';
 import FooterNavLink from './FooterNavLink';
+import Icon from '../../ui/Icon';
 
 const Footer = () => {
   const matchRoute = useMatchRoute();
@@ -18,15 +16,15 @@ const Footer = () => {
     <FooterContainer>
       <FooterNav>
         <FooterNavLink to="/financial-input">
-          <PencilIcon />
+          <Icon type="pencil" />
           <NavLabel>재무 입력</NavLabel>
         </FooterNavLink>
         <FooterNavLink to="/analysis/income/salary">
-          <GrapoIcon />
+          <Icon type="grapo" />
           <NavLabel>결과 분석</NavLabel>
         </FooterNavLink>
         <FooterNavLink to="/logout">
-          <OutIcon />
+          <Icon type="out" />
           <NavLabel>로그아웃</NavLabel>
         </FooterNavLink>
       </FooterNav>
