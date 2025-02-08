@@ -1,7 +1,6 @@
 import { DefaultTheme } from 'styled-components';
 import 'styled-components';
 
-// and extend them!
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
@@ -15,6 +14,10 @@ declare module 'styled-components' {
       white: string;
       error: string;
     };
+    pageLayout: {
+      breakPoint: string;
+      paddingX: string;
+    };
   }
 }
 
@@ -24,11 +27,15 @@ const Theme: DefaultTheme = {
     primaryDark: '#A8BF38',
     grayBg: '#F5F5F5',
     grayLine: '#EEEEEE',
-    grayMiddle: 'bbbbbb',
+    grayMiddle: '#bbbbbb',
     grayDark: '#787878',
     black: '#000000',
     white: '#ffffff',
     error: '#EB4545',
+  },
+  pageLayout: {
+    breakPoint: '400px',
+    paddingX: '16px',
   },
 };
 

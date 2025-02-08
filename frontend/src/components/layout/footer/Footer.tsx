@@ -1,19 +1,10 @@
 import styled from 'styled-components';
-import { useMatchRoute } from '@tanstack/react-router';
 import FooterNavLink from './FooterNavLink';
 import Icon from '../../ui/Icon';
 
 const Footer = () => {
-  const matchRoute = useMatchRoute();
-
-  // auth 페이지인지 check
-  const isAuthPage =
-    matchRoute({ to: '/auth/sign-in' }) || matchRoute({ to: '/auth/sign-up' });
-
-  if (isAuthPage) return null;
-
   return (
-    <FooterContainer>
+    <FooterWrapper>
       <FooterNav>
         <FooterNavLink to="/financial-input">
           <Icon type="pencil" />
@@ -28,31 +19,25 @@ const Footer = () => {
           <NavLabel>로그아웃</NavLabel>
         </FooterNavLink>
       </FooterNav>
-    </FooterContainer>
+    </FooterWrapper>
   );
 };
 
 export default Footer;
 
-const FooterContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: ${(props) => props.theme.colors.white};
+const FooterWrapper = styled.div`
   border: ${(props) => `1px solid ${props.theme.colors.grayLine}`};
   display: flex;
   justify-content: center;
   align-items: center;
   height: 60px;
-  z-index: 100;
 `;
 
 const FooterNav = styled.nav`
   display: flex;
   justify-content: space-around;
   width: 100%;
-  max-width: 575px;
+  max-width: ${(props) => props.theme.pageLayout.breakPoint};
 `;
 
 const NavLabel = styled.span`
