@@ -55,7 +55,7 @@ function RouteComponent() {
 
   return (
     <>
-      <PageNavigator />
+      <PageNavigator disabledForward />
 
       <FormProvider {...formControl}>
         <Funnel>
