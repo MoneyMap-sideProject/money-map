@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { toast } from 'react-toastify';
 
 type FunnelStepProps<T> = {
   name: T;
@@ -65,15 +66,24 @@ export default function useFunnel<T>(steps: T[]) {
   }, []);
 
   useEffect(() => {
-    if (!stepParam) {
+    // url을 이용하여 중간 단계에 접근할 수 없도록 방지
+    if (stepParam && stepParam !== steps[0]) {
+      toast('잘못된 경로 접근입니다.');
       navigate({
-        search: {
-          // TODO: 타입 잡기
-          [SEARCH_PARAM_KEY]: currentStep,
-        },
+        to: location.pathname,
         replace: true,
       });
+      return;
     }
+
+    // 초기 단계를 search param으로 등록
+    navigate({
+      search: {
+        // TODO: 타입 잡기
+        [SEARCH_PARAM_KEY]: currentStep,
+      },
+      replace: true,
+    });
 
     setIsDirty(true);
   }, []);
