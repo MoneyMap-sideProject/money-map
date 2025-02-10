@@ -1,10 +1,15 @@
 import {
   Injectable,
-  BadRequestException,
   NotFoundException,
+  BadRequestException,
+  ConflictException,
+  UnauthorizedException,
+  InternalServerErrorException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateUserDto, LoginUserDto } from './user.dto';
+import * as validator from 'validator';
 import { User } from './entities/user.entity/user.entity';
 
 @Injectable()
@@ -15,74 +20,66 @@ export class UserService {
   ) {}
 
   /**
-   * Creates a new user
-   * @param email - The email of the new user
-   * @returns The created user
+   * @desc 새로운 사용자 생성
+   * @param dto CreateUserDto (이메일)
    */
-  async createUser(email: string) {
-    if (!email) {
-      throw new BadRequestException('Email is required.');
+  async createUser(dto: CreateUserDto) {
+    const { email } = dto;
+
+    // 이메일 유효성 검사
+    if (!validator.isEmail(email)) {
+      throw new BadRequestException('Invalid email format');
     }
 
+    // 이메일 중복 검사
     const existingUser = await this.userRepository.findOne({
       where: { email },
     });
-
     if (existingUser) {
-      throw new BadRequestException('A user with this email already exists.');
+      throw new ConflictException('Email is already registered');
     }
 
-    const user = this.userRepository.create({ email });
-
     try {
+      const user = this.userRepository.create(dto);
       return await this.userRepository.save(user);
     } catch (error) {
-      throw new BadRequestException(
-        'Failed to create the user. Please try again.',
-      );
+      throw new InternalServerErrorException('Failed to create user');
     }
   }
 
   /**
-   * Retrieves all users
-   * @returns A list of all users
+   * @desc 이메일을 기반으로 사용자 조회
+   * @param email 사용자 이메일
    */
-  async findAll() {
-    try {
-      const users = await this.userRepository.find();
-      if (users.length === 0) {
-        throw new NotFoundException('No users found.');
-      }
-      return users;
-    } catch (error) {
-      throw new BadRequestException('Failed to retrieve users.');
+  async findByEmail(email: string) {
+    if (!validator.isEmail(email)) {
+      throw new BadRequestException('Invalid email format');
     }
+
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
   }
 
   /**
-   * Logs in a user by email
-   * @param email - The email of the user
-   * @returns The logged-in user
+   * @desc 사용자의 유효성 검증 (ID 기반 로그인)
+   * @param dto LoginUserDto (이메일)
    */
-  async login(email: string) {
-    if (!email) {
-      throw new BadRequestException('Email is required.');
+  async validateUser(dto: LoginUserDto) {
+    const { email } = dto;
+
+    if (!validator.isEmail(email)) {
+      throw new BadRequestException('Invalid email format');
     }
 
-    try {
-      const user = await this.userRepository.findOne({
-        where: { email },
-      });
-
-      if (!user) {
-        throw new NotFoundException('User with this email does not exist.');
-      }
-
-      return user;
-    } catch (error) {
-      throw new BadRequestException(
-        'Failed to log in the user. Please try again.',
-      );
+    const user = await this.findByEmail(email);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
     }
+
+    return user;
   }
 }

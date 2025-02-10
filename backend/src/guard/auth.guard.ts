@@ -9,10 +9,8 @@ import {
 export class AuthGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
-    if (!request.session || !request.session.user) {
-      throw new UnauthorizedException(
-        'You must be logged in to access this resource.',
-      );
+    if (!request.session.user) {
+      throw new UnauthorizedException('User not authenticated');
     }
     return true;
   }

@@ -7,25 +7,24 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
+import { CreateUserDto, LoginUserDto } from './user.dto';
 import { AuthGuard } from 'src/guard/auth.guard';
-import { Session as ExpressSession } from 'express-session';
+import { Session as ExpressSession, SessionData } from 'express-session';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Post('register')
+  async register(@Body() dto: CreateUserDto) {
+    return this.userService.createUser(dto);
+  }
+
   @Post('login')
-  async login(
-    @Body('email') email: string,
-    @Session() session: ExpressSession, // NestJS에서 세션을 DI로 주입
-  ) {
-    const user = await this.userService.login(email);
-    if (user) {
-      session.user = { email: user.email }; // 세션에 사용자 정보 저장
-      return { message: 'Login successful' };
-    } else {
-      return { statusCode: 401, message: 'Invalid credentials' };
-    }
+  async login(@Body() dto: LoginUserDto, @Session() session: SessionData) {
+    const user = await this.userService.validateUser(dto);
+    session.user = { id: user.id, email: user.email };
+    return { message: 'Login successful' };
   }
 
   @Get('logout')
@@ -40,22 +39,9 @@ export class UserController {
     });
   }
 
-  @Get('status')
-  status(@Session() session: ExpressSession) {
-    if (session.user) {
-      return { loggedIn: true, user: session.user };
-    }
-    return { loggedIn: false };
-  }
-
   @UseGuards(AuthGuard)
-  @Get()
-  async findAll() {
-    return this.userService.findAll();
-  }
-
-  @Post('create')
-  async createUser(@Body('email') email: string) {
-    return this.userService.createUser(email);
+  @Get('profile')
+  profile(@Session() session: SessionData) {
+    return { user: session.user };
   }
 }
