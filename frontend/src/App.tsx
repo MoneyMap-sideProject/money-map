@@ -4,6 +4,8 @@ import NotFound from './components/404';
 import GlobalStyle from './styles/GlobalStyle';
 import { AppQueryProvider } from './api/AppQueryProvider';
 import { ToastContainer } from 'react-toastify';
+import { ThemeProvider } from 'styled-components';
+import Theme from './styles/DefaultTheme';
 
 const router = createRouter({
   routeTree,
@@ -28,11 +30,13 @@ function App() {
   };
 
   return (
-    <AppQueryProvider>
-      <GlobalStyle />
-      <RouterProvider router={router} context={{ auth }} />
-      <ToastContainer />
-    </AppQueryProvider>
+    <ThemeProvider theme={Theme}>
+      <AppQueryProvider>
+        <GlobalStyle />
+        <RouterProvider router={router} context={{ auth }} />
+        <ToastContainer />
+      </AppQueryProvider>
+    </ThemeProvider>
   );
 }
 

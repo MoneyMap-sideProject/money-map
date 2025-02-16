@@ -1,6 +1,6 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import Footer from '../components/layout/footer/Footer';
+import styled from 'styled-components';
 
 type ContextValue = {
   auth: {
@@ -10,10 +10,18 @@ type ContextValue = {
 
 export const Route = createRootRouteWithContext<ContextValue>()({
   component: () => (
-    <>
-      <Outlet />
-      <Footer />
-      <TanStackRouterDevtools />
-    </>
+    <Layout>
+      <div>
+        <Outlet />
+        <TanStackRouterDevtools />
+      </div>
+    </Layout>
   ),
 });
+
+const Layout = styled.div`
+  max-width: ${(props) => props.theme.pageLayout.breakPoint};
+  width: 100%;
+  padding: 0 ${(props) => props.theme.pageLayout.paddingX};
+  margin: 0 auto;
+`;
