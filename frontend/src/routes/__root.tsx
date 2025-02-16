@@ -1,8 +1,14 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import Footer from '../components/layout/footer';
+import Footer from '../components/layout/footer/Footer';
 
-export const Route = createRootRoute({
+type ContextValue = {
+  auth: {
+    isLogin: boolean;
+  };
+};
+
+export const Route = createRootRouteWithContext<ContextValue>()({
   component: () => (
     <>
       <Outlet />
