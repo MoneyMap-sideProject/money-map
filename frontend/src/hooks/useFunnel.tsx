@@ -9,14 +9,24 @@ import {
   useState,
 } from 'react';
 import { toast } from 'react-toastify';
+import { Route } from '../routes/__root';
+
+type UseFunnelArgs<T, C extends Context> = {
+  steps: T[];
+  context?: C;
+};
+
+type Context = Record<string, any>;
 
 type FunnelStepProps<T> = {
   name: T;
   children: ReactNode;
 };
 
-// TODO: 뒤로 가기, 앞으로 가기 했을 때 컴포넌트 변경 안되는 거 해결 (params 읽어서 컴포넌트 띄우기)
-export default function useFunnel<T>(steps: T[]) {
+export default function useFunnel<T, C extends Context>({
+  steps,
+  context,
+}: UseFunnelArgs<T, C>) {
   const location = useLocation();
   const router = useRouter();
   const navigate = useNavigate();
@@ -32,6 +42,16 @@ export default function useFunnel<T>(steps: T[]) {
   const totalStep = steps.length;
   const hasPrevStep = currentStepIndex !== 0;
   const hasNextStep = totalStep > currentStepIndex + 1;
+
+  const defaultContext: C = context ?? ({} as C);
+  const [funnelContext, _setFunnelContext] = useState<C>(defaultContext);
+
+  const setFunnelContext = (context: Partial<C>) => {
+    _setFunnelContext((prev) => ({
+      ...prev,
+      ...context,
+    }));
+  };
 
   const goNext = () => {
     if (!hasNextStep) return;
@@ -69,6 +89,9 @@ export default function useFunnel<T>(steps: T[]) {
     // url을 이용하여 중간 단계에 접근할 수 없도록 방지
     if (stepParam && stepParam !== steps[0]) {
       toast('잘못된 경로 접근입니다.');
+      setCurrentStep(steps[0]);
+      setFunnelContext(defaultContext);
+      setIsDirty(false);
       navigate({
         to: location.pathname,
         replace: true,
@@ -106,14 +129,18 @@ export default function useFunnel<T>(steps: T[]) {
   }, [currentStep]);
 
   return {
-    currentStep,
-    currentStepIndex,
-    totalStep,
-    hasPrevStep,
-    hasNextStep,
+    controls: {
+      funnelContext,
+      currentStep,
+      currentStepIndex,
+      totalStep,
+      hasPrevStep,
+      hasNextStep,
+      goNext,
+      goPrev,
+      setFunnelContext,
+    },
     Funnel,
     FunnelStep,
-    goNext,
-    goPrev,
   };
 }
