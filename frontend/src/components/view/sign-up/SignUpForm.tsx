@@ -3,7 +3,7 @@ import { Email } from '../../../api/user/type';
 import AuthForm from '../../ui/auth/AuthForm';
 import InputLabel from '../../ui/InputLabel';
 import Input from '../../ui/Input';
-import { VALIDATION_RULES } from '../../../constants/validatationRules';
+import { AUTH_VALIDATION_RULES } from '../../../constants/authValidatationRules';
 import InputErrorMessage from '../../ui/InputErrorMessage';
 import AuthButtonContainer from '../../ui/auth/AuthButtonContainer';
 import AuthButton from '../../ui/auth/AuthButton';
@@ -61,7 +61,7 @@ export default function SignUpForm() {
             message: '이메일을 입력해주세요.',
           },
           pattern: {
-            value: VALIDATION_RULES.emial,
+            value: AUTH_VALIDATION_RULES.email,
             message: '이메일 형식으로 입력해주세요.',
           },
         })}
