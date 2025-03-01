@@ -103,7 +103,6 @@ export default function useFunnel<T, C extends Context>({
     // 초기 단계를 search param으로 등록
     navigate({
       search: {
-        // TODO: 타입 잡기
         [SEARCH_PARAM_KEY]: currentStep,
       },
       replace: true,
