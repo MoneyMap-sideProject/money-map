@@ -17,6 +17,16 @@ export const Route = createRootRouteWithContext<ContextValue>()({
       </div>
     </Layout>
   ),
+  validateSearch: (search) => {
+    return {
+      ...search,
+      'funnel-step': search['funnel-step'],
+    } as
+      | typeof search
+      | {
+          'funnel-step': string;
+        };
+  },
 });
 
 const Layout = styled.div`

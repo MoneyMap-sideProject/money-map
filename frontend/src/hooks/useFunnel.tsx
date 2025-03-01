@@ -29,15 +29,16 @@ export default function useFunnel<T, C extends Context>({
 }: UseFunnelArgs<T, C>) {
   const location = useLocation();
   const router = useRouter();
-  const navigate = useNavigate();
+  const navigate = useNavigate({ from: Route.fullPath });
 
   const SEARCH_PARAM_KEY = 'funnel-step';
-  const stepParam = location.search[SEARCH_PARAM_KEY];
+  const param = location.search[SEARCH_PARAM_KEY];
+  const stepParam = param && typeof param === 'string' ? param : '';
   const START_STEP_INDEX = 0;
-  const defaultStepIndex = stepParam ?? steps[START_STEP_INDEX];
+  const defaultStep = stepParam || steps[START_STEP_INDEX];
 
   const [isDirty, setIsDirty] = useState(false);
-  const [currentStep, setCurrentStep] = useState(defaultStepIndex);
+  const [currentStep, setCurrentStep] = useState(defaultStep);
   const currentStepIndex = steps.findIndex((step) => step === currentStep);
   const totalStep = steps.length;
   const hasPrevStep = currentStepIndex !== 0;
@@ -111,35 +112,39 @@ export default function useFunnel<T, C extends Context>({
     setIsDirty(true);
   }, []);
 
-  useEffect(() => {
-    if (!isDirty || !stepParam || stepParam === currentStep) return;
+  useEffect(
+    function syncCurrentStepWithHistory() {
+      if (!isDirty || !stepParam || stepParam === currentStep) return;
 
-    setCurrentStep(stepParam);
-  }, [stepParam]);
+      setCurrentStep(stepParam);
+    },
+    [stepParam],
+  );
 
-  useEffect(() => {
-    if (!isDirty || stepParam === currentStep) return;
+  useEffect(
+    function syncHistoryWithCurrentStep() {
+      if (!isDirty || stepParam === currentStep) return;
 
-    navigate({
-      search: {
-        [SEARCH_PARAM_KEY]: currentStep,
-      },
-      replace: false,
-    });
-  }, [currentStep]);
+      navigate({
+        search: {
+          [SEARCH_PARAM_KEY]: currentStep,
+        },
+        replace: false,
+      });
+    },
+    [currentStep],
+  );
 
   return {
-    controls: {
-      funnelContext,
-      currentStep,
-      currentStepIndex,
-      totalStep,
-      hasPrevStep,
-      hasNextStep,
-      goNext,
-      goPrev,
-      setFunnelContext,
-    },
+    funnelContext,
+    currentStep,
+    currentStepIndex,
+    totalStep,
+    hasPrevStep,
+    hasNextStep,
+    goNext,
+    goPrev,
+    setFunnelContext,
     Funnel,
     FunnelStep,
   };
