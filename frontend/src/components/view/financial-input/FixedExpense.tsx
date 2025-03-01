@@ -1,5 +1,5 @@
-import { useFormContext } from 'react-hook-form';
 import {
+  FinancialButtonWrapper,
   FinancialForm,
   FinancialFormItem,
   FinancialInput,
@@ -7,20 +7,58 @@ import {
 } from './FinancialInput.styled';
 import InputLabel from '../../ui/InputLabel';
 import { PageTitle, PageTitleCaption } from '../../ui/PageTitle';
+import BottomFixedContainer from '../../ui/BottomFixedContainer';
+import ProgressButton from '../../ui/ProgressButton';
+import Footer from '../../layout/footer/Footer';
+import { useForm } from 'react-hook-form';
 
-export type FixedExpenseFormValues = {
-  fixedExpenseRent: string; // 월세 및 관리비
-  fixedExpenseCommunication: string; // 통신비
-  fixedExpenseUtilities: string; // 전기 및 가스
-  fixedExpenseInsurance: string; // 보험
-  fixedExpenseOther: string; // 지출(고정비) 기타
+type FormInput = Record<
+  | 'fixedExpenseRent'
+  | 'fixedExpenseCommunication'
+  | 'fixedExpenseUtilities'
+  | 'fixedExpenseInsurance'
+  | 'fixedExpenseOther',
+  number
+>;
+
+type Props = FormInput & {
+  totalStep: number;
+  currentStep: string;
+  currentStepIndex: number;
+  goNext: () => void;
+  setFunnelContext: (context: FormInput) => void;
 };
 
-export default function FixedExpense() {
-  const { register } = useFormContext<FixedExpenseFormValues>();
+export default function FixedExpense({
+  fixedExpenseRent,
+  fixedExpenseCommunication,
+  fixedExpenseUtilities,
+  fixedExpenseInsurance,
+  fixedExpenseOther,
+  currentStepIndex,
+  totalStep,
+  goNext,
+  setFunnelContext,
+}: Props) {
+  const { register, handleSubmit, getValues } = useForm({
+    defaultValues: {
+      fixedExpenseRent,
+      fixedExpenseCommunication,
+      fixedExpenseUtilities,
+      fixedExpenseInsurance,
+      fixedExpenseOther,
+    },
+  });
+
+  const updateFinancialFormState = () => {
+    const values = getValues();
+
+    setFunnelContext(values);
+    goNext();
+  };
 
   return (
-    <FinancialSection>
+    <FinancialSection onSubmit={handleSubmit(updateFinancialFormState)}>
       <header>
         <PageTitle>
           지출(고정비)<PageTitleCaption>월 기준</PageTitleCaption>
@@ -31,12 +69,17 @@ export default function FixedExpense() {
         <FinancialFormItem>
           <div>
             <InputLabel htmlFor="fixedExpenseRent">월세 및 관리비</InputLabel>
-            <FinancialInput type="number" {...register('fixedExpenseRent')} />
+            <FinancialInput
+              type="number"
+              id="fixedExpenseRent"
+              {...register('fixedExpenseRent')}
+            />
           </div>
           <div>
             <InputLabel htmlFor="fixedExpenseCommunication">통신비</InputLabel>
             <FinancialInput
               type="number"
+              id="fixedExpenseCommunication"
               {...register('fixedExpenseCommunication')}
             />
           </div>
@@ -48,6 +91,7 @@ export default function FixedExpense() {
             </InputLabel>
             <FinancialInput
               type="number"
+              id="fixedExpenseUtilities"
               {...register('fixedExpenseUtilities')}
             />
           </div>
@@ -55,6 +99,7 @@ export default function FixedExpense() {
             <InputLabel htmlFor="fixedExpenseInsurance">보험</InputLabel>
             <FinancialInput
               type="number"
+              id="fixedExpenseInsurance"
               {...register('fixedExpenseInsurance')}
             />
           </div>
@@ -62,9 +107,26 @@ export default function FixedExpense() {
         <FinancialFormItem>
           <div>
             <InputLabel htmlFor="fixedExpenseOther">기타</InputLabel>
-            <FinancialInput type="number" {...register('fixedExpenseOther')} />
+            <FinancialInput
+              type="number"
+              id="fixedExpenseOther"
+              {...register('fixedExpenseOther')}
+            />
           </div>
         </FinancialFormItem>
+
+        <BottomFixedContainer>
+          <FinancialButtonWrapper>
+            <ProgressButton
+              type="submit"
+              total={totalStep}
+              step={currentStepIndex + 1}
+            >
+              다음
+            </ProgressButton>
+          </FinancialButtonWrapper>
+          <Footer />
+        </BottomFixedContainer>
       </FinancialForm>
     </FinancialSection>
   );

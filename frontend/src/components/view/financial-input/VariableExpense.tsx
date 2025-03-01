@@ -1,5 +1,5 @@
-import { useFormContext } from 'react-hook-form';
 import {
+  FinancialButtonWrapper,
   FinancialForm,
   FinancialFormItem,
   FinancialInput,
@@ -7,19 +7,49 @@ import {
 } from './FinancialInput.styled';
 import InputLabel from '../../ui/InputLabel';
 import { PageTitle, PageTitleCaption } from '../../ui/PageTitle';
+import BottomFixedContainer from '../../ui/BottomFixedContainer';
+import ProgressButton from '../../ui/ProgressButton';
+import Footer from '../../layout/footer/Footer';
+import { useForm } from 'react-hook-form';
 
-export type VariableExpenseFormValues = {
-  variableExpenseFood: string; // 식비
-  variableExpenseTransport: string; // 교통비
-  variableExpenseTravel: string; // 여행비
-  variableExpenseOther: string; // 지출(비고정비) 기타
+type FormInput = Record<
+  | 'variableExpenseFood'
+  | 'variableExpenseTransport'
+  | 'variableExpenseTravel'
+  | 'variableExpenseOther',
+  number
+>;
+
+type Props = FormInput & {
+  totalStep: number;
+  setFunnelContext: (context: FormInput) => void;
 };
 
-export default function VariableExpense() {
-  const { register } = useFormContext<VariableExpenseFormValues>();
+export default function VariableExpense({
+  variableExpenseFood,
+  variableExpenseTransport,
+  variableExpenseTravel,
+  variableExpenseOther,
+  totalStep,
+  setFunnelContext,
+}: Props) {
+  const { register, handleSubmit, getValues } = useForm({
+    defaultValues: {
+      variableExpenseFood,
+      variableExpenseTransport,
+      variableExpenseTravel,
+      variableExpenseOther,
+    },
+  });
+
+  const updateFinancialFormState = () => {
+    const values = getValues();
+
+    setFunnelContext(values);
+  };
 
   return (
-    <FinancialSection>
+    <FinancialSection onSubmit={handleSubmit(updateFinancialFormState)}>
       <header>
         <PageTitle>
           지출(비고정비)<PageTitleCaption>월 기준</PageTitleCaption>
@@ -32,6 +62,7 @@ export default function VariableExpense() {
             <InputLabel htmlFor="variableExpenseFood">식비</InputLabel>
             <FinancialInput
               type="number"
+              id="variableExpenseFood"
               {...register('variableExpenseFood')}
             />
           </div>
@@ -39,6 +70,7 @@ export default function VariableExpense() {
             <InputLabel htmlFor="variableExpenseTransport">교통비</InputLabel>
             <FinancialInput
               type="number"
+              id="variableExpenseTransport"
               {...register('variableExpenseTransport')}
             />
           </div>
@@ -48,6 +80,7 @@ export default function VariableExpense() {
             <InputLabel htmlFor="variableExpenseTravel">여행비</InputLabel>
             <FinancialInput
               type="number"
+              id="variableExpenseTravel"
               {...register('variableExpenseTravel')}
             />
           </div>
@@ -55,10 +88,20 @@ export default function VariableExpense() {
             <InputLabel htmlFor="variableExpenseOther">기타</InputLabel>
             <FinancialInput
               type="number"
+              id="variableExpenseOther"
               {...register('variableExpenseOther')}
             />
           </div>
         </FinancialFormItem>
+
+        <BottomFixedContainer>
+          <FinancialButtonWrapper>
+            <ProgressButton type="submit" total={totalStep} step={totalStep}>
+              제출
+            </ProgressButton>
+          </FinancialButtonWrapper>
+          <Footer />
+        </BottomFixedContainer>
       </FinancialForm>
     </FinancialSection>
   );
