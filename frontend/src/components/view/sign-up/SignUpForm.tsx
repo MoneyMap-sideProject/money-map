@@ -30,7 +30,7 @@ export default function SignUpForm() {
   });
   const emailError = !!errors.email;
 
-  const _handleSubmit = async (values: FormInput) => {
+  const signUp = async (values: FormInput) => {
     createUserMutation.mutate(values, {
       onSuccess: (data) => {
         console.log('[회원가입 성공]', data);
@@ -50,7 +50,7 @@ export default function SignUpForm() {
   };
 
   return (
-    <AuthForm onSubmit={handleSubmit(_handleSubmit)}>
+    <AuthForm onSubmit={handleSubmit(signUp)}>
       <InputLabel htmlFor="email">이메일</InputLabel>
       <Input
         placeholder="sample@sample.com"

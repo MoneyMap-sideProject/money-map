@@ -31,7 +31,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const loginMutation = useLoginMutation();
 
-  const _handleSubmit = async (values: FormInput) => {
+  const login = async (values: FormInput) => {
     loginMutation.mutate(values, {
       onSuccess: () => {
         navigate({ to: '/' });
@@ -50,7 +50,7 @@ export default function LoginForm() {
   };
 
   return (
-    <AuthForm onSubmit={handleSubmit(_handleSubmit)}>
+    <AuthForm onSubmit={handleSubmit(login)}>
       <InputLabel htmlFor="email">이메일</InputLabel>
       <Input
         type="email"
