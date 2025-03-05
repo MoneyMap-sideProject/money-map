@@ -1,16 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 100 })
+  @Column({ unique: true })
   email: string;
 
-  //   @Column({ length: 255 })
-  //   password: string;
-
-  @Column({ default: new Date() })
-  createdAt: Date;
+  // @Column()
+  // password: string; // 실제 서비스에서는 비밀번호 해싱 필요
 }
