@@ -1,23 +1,40 @@
 import { useForm } from 'react-hook-form';
-import { Email } from '../../../api/user/type';
+import {
+  CreateUserRequestBody,
+  CreateUserResponseBody,
+  Email,
+} from '../../../api/user/type';
 import AuthForm from '../../ui/auth/AuthForm';
 import InputLabel from '../../ui/InputLabel';
 import Input from '../../ui/Input';
-import { VALIDATION_RULES } from '../../../constants/validatationRules';
+import { AUTH_VALIDATION_RULES } from '../../../constants/authValidatationRules';
 import InputErrorMessage from '../../ui/InputErrorMessage';
 import AuthButtonContainer from '../../ui/auth/AuthButtonContainer';
 import AuthButton from '../../ui/auth/AuthButton';
 import { useNavigate } from '@tanstack/react-router';
-import useCreateUserMutation from '../../../api/user/hooks/useCreateUserMutation';
 import { toast } from 'react-toastify';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError, AxiosResponse } from 'axios';
+import { requestCreateUser } from '../../../api/user';
+import { queryKey } from '../../../api/user/queryKey';
 
 type FormInput = {
   email: Email;
 };
 
 export default function SignUpForm() {
+  const queryClient = useQueryClient();
+  const createUserMutation = useMutation<
+    AxiosResponse<CreateUserResponseBody>,
+    AxiosError,
+    CreateUserRequestBody
+  >({
+    mutationFn: (body) => requestCreateUser(body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKey.signup() });
+    },
+  });
   const navigate = useNavigate();
-  const createUserMutation = useCreateUserMutation();
   const {
     formState: { errors },
     register,
@@ -61,7 +78,7 @@ export default function SignUpForm() {
             message: '이메일을 입력해주세요.',
           },
           pattern: {
-            value: VALIDATION_RULES.emial,
+            value: AUTH_VALIDATION_RULES.email,
             message: '이메일 형식으로 입력해주세요.',
           },
         })}

@@ -16,7 +16,7 @@ export type LoginRequestBody = {
   email: Email;
 };
 
-export type LoginReponseBody = {
+export type LoginResponseBody = {
   createdAt: Time;
   email: Email;
   id: Id;
