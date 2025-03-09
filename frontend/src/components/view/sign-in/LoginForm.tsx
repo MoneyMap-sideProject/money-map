@@ -1,5 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { Email } from '../../../api/user/type';
+import {
+  Email,
+  LoginResponseBody,
+  LoginRequestBody,
+} from '../../../api/user/type';
 import { useNavigate } from '@tanstack/react-router';
 import AuthForm from '../../ui/auth/AuthForm';
 import InputLabel from '../../ui/InputLabel';
@@ -8,14 +12,33 @@ import { AUTH_VALIDATION_RULES } from '../../../constants/authValidatationRules'
 import InputErrorMessage from '../../ui/InputErrorMessage';
 import AuthButtonContainer from '../../ui/auth/AuthButtonContainer';
 import AuthButton from '../../ui/auth/AuthButton';
-import useLoginMutation from '../../../api/user/hooks/useLoginMutation';
 import { toast } from 'react-toastify';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError, AxiosResponse } from 'axios';
+import { queryKey } from '../../../api/user/queryKey';
+import { requestLogin } from '../../../api/user';
 
 type FormInput = {
   email: Email;
 };
 
 export default function LoginForm() {
+  const queryClient = useQueryClient();
+  const loginMutation = useMutation<
+    AxiosResponse<LoginResponseBody>,
+    AxiosError,
+    LoginRequestBody
+  >({
+    mutationFn: (body) => requestLogin(body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKey.signin() });
+    },
+    onError: (error) => {
+      // TODO: 에러 처리
+      console.error(error);
+    },
+  });
+
   const {
     formState: { errors },
     register,
@@ -27,9 +50,7 @@ export default function LoginForm() {
     mode: 'onBlur',
   });
   const emailError = !!errors.email;
-
   const navigate = useNavigate();
-  const loginMutation = useLoginMutation();
 
   const _handleSubmit = async (values: FormInput) => {
     loginMutation.mutate(values, {
