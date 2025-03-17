@@ -2,16 +2,16 @@ import styled from 'styled-components';
 
 const AuthText = styled.p`
   font-size: 14px;
-  color: #000000;
+  color: ${(props) => props.theme.colors.black};
 
   a {
-    color: #000000;
+    color: ${(props) => props.theme.colors.black};
     font-weight: 400;
     text-decoration: underline;
     cursor: pointer;
 
     &:hover {
-      color: #555555;
+      color: ${(props) => props.theme.colors.grayDark};
     }
   }
 `;
