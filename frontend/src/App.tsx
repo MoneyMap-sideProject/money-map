@@ -1,11 +1,11 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
-import NotFound from './components/404';
-import GlobalStyle from './styles/GlobalStyle';
-import { AppQueryProvider } from './api/AppQueryProvider';
+import NotFound from './widgets/NotFound';
+import GlobalStyle from './shared/styles/GlobalStyle';
+import { AppQueryProvider } from './app/providers/AppQueryProvider';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
-import Theme from './styles/DefaultTheme';
+import Theme from './shared/styles/DefaultTheme';
 
 const router = createRouter({
   routeTree,
