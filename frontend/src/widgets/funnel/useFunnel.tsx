@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react';
 import { toast } from 'react-toastify';
-import { Route } from '../../pages/__root';
+import { Route } from '@/pages/__root';
 
 type UseFunnelArgs<T, C extends Context> = {
   steps: T[];

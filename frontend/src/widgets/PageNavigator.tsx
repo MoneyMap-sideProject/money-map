@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useRouter } from '@tanstack/react-router';
-import Icon from '../shared/ui/Icon';
+import Icon from '@/shared/ui/Icon';
 
 type Props = {
   disabledBack?: boolean;

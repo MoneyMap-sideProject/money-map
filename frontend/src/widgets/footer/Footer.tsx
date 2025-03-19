@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Icon from '../../shared/ui/Icon';
+import Icon from '@/shared/ui/Icon';
 import FooterNavLink from './FooterNavLink';
 import { ForwardedRef, forwardRef } from 'react';
 

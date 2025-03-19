@@ -1,7 +1,7 @@
-import BottomFixedContainer from '../../../shared/ui/bottom-fixed/BottomFixedContainer';
-import InputLabel from '../../../shared/ui/InputLabel';
-import { PageTitle } from '../../../shared/ui/PageTitle';
-import ProgressButton from '../../../shared/ui/ProgressButton';
+import BottomFixedContainer from '@/shared/ui/bottom-fixed/BottomFixedContainer';
+import InputLabel from '@/shared/ui/InputLabel';
+import { PageTitle } from '@/shared/ui/PageTitle';
+import ProgressButton from '@/shared/ui/ProgressButton';
 import {
   FinancialButtonWrapper,
   FinancialForm,

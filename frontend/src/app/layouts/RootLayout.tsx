@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useMatchRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import { BottomFixedProvider } from '../../shared/ui/bottom-fixed/BottomFixedContext';
-import Footer from '../../widgets/footer/Footer';
+import { BottomFixedProvider } from '@/shared/ui/bottom-fixed/BottomFixedContext';
+import Footer from '@/widgets/footer/Footer';
 import styled from 'styled-components';
 
 export default function RootLayout() {
