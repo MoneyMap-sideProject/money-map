@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Input from '../../../shared/ui/Input';
+import Input from '@/shared/ui/Input';
 
 export const FinancialSection = styled.section`
   margin-top: 20px;

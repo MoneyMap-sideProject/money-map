@@ -1,5 +1,5 @@
 import { createRootRouteWithContext } from '@tanstack/react-router';
-import RootLayout from '../app/layouts/RootLayout';
+import RootLayout from '@/app/layouts/RootLayout';
 
 type ContextValue = {
   auth: {
