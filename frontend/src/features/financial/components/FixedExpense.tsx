@@ -58,14 +58,14 @@ export default function FixedExpense({
   };
 
   return (
-    <FinancialSection onSubmit={handleSubmit(updateFinancialFormState)}>
+    <FinancialSection>
       <header>
         <PageTitle>
           지출(고정비)<PageTitleCaption>월 기준</PageTitleCaption>
         </PageTitle>
       </header>
 
-      <FinancialForm>
+      <FinancialForm onSubmit={handleSubmit(updateFinancialFormState)}>
         <FinancialFormItem>
           <div>
             <InputLabel htmlFor="fixedExpenseRent">월세 및 관리비</InputLabel>

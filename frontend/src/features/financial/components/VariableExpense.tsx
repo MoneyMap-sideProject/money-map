@@ -49,14 +49,14 @@ export default function VariableExpense({
   };
 
   return (
-    <FinancialSection onSubmit={handleSubmit(updateFinancialFormState)}>
+    <FinancialSection>
       <header>
         <PageTitle>
           지출(비고정비)<PageTitleCaption>월 기준</PageTitleCaption>
         </PageTitle>
       </header>
 
-      <FinancialForm>
+      <FinancialForm onSubmit={handleSubmit(updateFinancialFormState)}>
         <FinancialFormItem>
           <div>
             <InputLabel htmlFor="variableExpenseFood">식비</InputLabel>
