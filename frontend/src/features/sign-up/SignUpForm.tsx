@@ -4,11 +4,11 @@ import { toast } from 'react-toastify';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import {
-  CreateUserRequestBody,
-  CreateUserResponseBody,
+  SignUpRequestBody,
+  SignUpResponseBody,
   Email,
 } from '../../shared/api/user/type';
-import { requestCreateUser } from '../../shared/api/user';
+import { signUp } from '../../shared/api/user';
 import { queryKey } from '../../shared/api/user/queryKey';
 import AuthForm from '../auth/ui/AuthForm';
 import InputLabel from '../../shared/ui/InputLabel';
@@ -24,12 +24,12 @@ type FormInput = {
 
 export default function SignUpForm() {
   const queryClient = useQueryClient();
-  const createUserMutation = useMutation<
-    AxiosResponse<CreateUserResponseBody>,
+  const signUpMutation = useMutation<
+    AxiosResponse<SignUpResponseBody>,
     AxiosError,
-    CreateUserRequestBody
+    SignUpRequestBody
   >({
-    mutationFn: (body) => requestCreateUser(body),
+    mutationFn: (body) => signUp(body),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKey.signup() });
     },
@@ -47,8 +47,8 @@ export default function SignUpForm() {
   });
   const emailError = !!errors.email;
 
-  const signUp = async (values: FormInput) => {
-    createUserMutation.mutate(values, {
+  const _signUp = async (values: FormInput) => {
+    signUpMutation.mutate(values, {
       onSuccess: (data) => {
         console.log('[회원가입 성공]', data);
         navigate({ to: '/auth/login' });
@@ -67,7 +67,7 @@ export default function SignUpForm() {
   };
 
   return (
-    <AuthForm onSubmit={handleSubmit(signUp)}>
+    <AuthForm onSubmit={handleSubmit(_signUp)}>
       <InputLabel htmlFor="email">이메일</InputLabel>
       <Input
         placeholder="sample@sample.com"
