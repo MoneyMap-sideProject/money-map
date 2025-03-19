@@ -31,7 +31,7 @@ export default function SignUpForm() {
   >({
     mutationFn: (body) => signUp(body),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKey.signup() });
+      queryClient.invalidateQueries({ queryKey: queryKey.signUp() });
     },
   });
   const navigate = useNavigate();

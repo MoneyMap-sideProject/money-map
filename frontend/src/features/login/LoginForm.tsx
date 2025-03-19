@@ -31,7 +31,7 @@ export default function LoginForm() {
   >({
     mutationFn: (body) => login(body),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKey.signin() });
+      queryClient.invalidateQueries({ queryKey: queryKey.login() });
     },
     onError: (error) => {
       // TODO: 에러 처리
