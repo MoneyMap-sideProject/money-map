@@ -5,6 +5,10 @@ const AuthWrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100svh;
+
+  & > div {
+    width: 100%;
+  }
 `;
 
 export default AuthWrapper;
