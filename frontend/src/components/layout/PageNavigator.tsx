@@ -24,10 +24,10 @@ export default function PageNavigator({
   return (
     <NavigatorContainer>
       <button onClick={handleGoBack} disabled={disabledBack}>
-        <Icon type="chevronLeft" />
+        <Icon type="chevron-left" />
       </button>
       <button onClick={handleGoForward} disabled={disabledForward}>
-        <Icon type="chevronRight" />
+        <Icon type="chevron-right" />
       </button>
     </NavigatorContainer>
   );
