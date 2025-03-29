@@ -1,8 +1,10 @@
 import { createRootRouteWithContext } from '@tanstack/react-router';
 import RootLayout from '@/app/layouts/RootLayout';
+import { Email } from '@/shared/api/user/type';
 
 type ContextValue = {
   auth: {
+    email: Email | null;
     isLogin: boolean;
   };
 };

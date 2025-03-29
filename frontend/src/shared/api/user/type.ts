@@ -21,3 +21,10 @@ export type LoginResponseBody = {
   email: Email;
   id: Id;
 };
+
+export type GetProfileResponseBody = {
+  user: {
+    id: Id;
+    email: Email;
+  };
+};
