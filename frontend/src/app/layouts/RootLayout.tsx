@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useMatchRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import { BottomFixedProvider } from '../../shared/ui/bottom-fixed/BottomFixedContext';
+import BottomFixedProvider from '../../shared/ui/bottom-fixed/BottomFixedProvider';
 import Footer from '../../widgets/footer/Footer';
 import styled from 'styled-components';
 
@@ -24,12 +24,12 @@ export default function RootLayout() {
 
   return (
     <>
-      <BottomFixedProvider value={{ bottomPosition: footerHeight }}>
-        <Wrapper>
+      <Wrapper>
+        <BottomFixedProvider value={{ bottomPosition: footerHeight }}>
           <Outlet />
-          {isAuthPage ? null : <Footer ref={footerRef} />}
-        </Wrapper>
-      </BottomFixedProvider>
+        </BottomFixedProvider>
+        {isAuthPage ? null : <Footer ref={footerRef} />}
+      </Wrapper>
       <TanStackRouterDevtools />
     </>
   );

@@ -1,13 +1,11 @@
 import { PropsWithChildren, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { useBottomFixedContainer } from './BottomFixedContext';
+import useBottomFixedContainer from './useBottomFixedContainer';
 
 export default function BottomFixedContainer({ children }: PropsWithChildren) {
   const { bottomPosition } = useBottomFixedContainer();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  console.log('[bottomPosition]', bottomPosition);
 
   useEffect(() => {
     if (!wrapperRef.current || !containerRef.current) return;
