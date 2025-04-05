@@ -2,17 +2,17 @@ import { SignUpRequestBody, LoginRequestBody } from './type';
 import instance from './instance';
 
 export const signUp = async (body: SignUpRequestBody) => {
-  return await instance.post('/register', body);
+  return instance.post('/register', body);
 };
 
 export const login = async (body: LoginRequestBody) => {
-  return await instance.post('/login', body);
+  return instance.post('/login', body);
 };
 
 export const logout = async () => {
-  return await instance.get('/logout');
+  return instance.get('/logout');
 };
 
 export const getProfile = async () => {
-  return await instance.get('/profile');
+  return instance.get('/profile');
 };
