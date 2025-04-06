@@ -49,12 +49,12 @@ export function ChangeRate({
   };
 
   return (
-    <FinancialSection onSubmit={handleSubmit(updateFinancialFormState)}>
+    <FinancialSection>
       <header>
         <PageTitle>변화율</PageTitle>
       </header>
 
-      <FinancialForm>
+      <FinancialForm onSubmit={handleSubmit(updateFinancialFormState)}>
         <FinancialFormItem>
           <div>
             <InputLabel htmlFor="salaryGrowthRate">연봉 상승률</InputLabel>
