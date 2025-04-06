@@ -7,14 +7,14 @@ import {
   Email,
   LoginRequestBody,
   LoginResponseBody,
-} from '../../shared/api/user/type';
-import { requestLogin } from '../../shared/api/user';
-import { queryKey } from '../../shared/api/user/queryKey';
+} from '@/shared/api/user/type';
+import { requestLogin } from '@/shared/api/user';
+import { queryKey } from '@/shared/api/user/queryKey';
 import AuthForm from '../auth/ui/AuthForm';
-import InputLabel from '../../shared/ui/InputLabel';
-import Input from '../../shared/ui/Input';
+import InputLabel from '@/shared/ui/InputLabel';
+import Input from '@/shared/ui/Input';
 import { AUTH_VALIDATION_RULES } from '../auth/constants/validationRules';
-import InputErrorMessage from '../../shared/ui/InputErrorMessage';
+import InputErrorMessage from '@/shared/ui/InputErrorMessage';
 import AuthButtonContainer from '../auth/ui/AuthButtonContainer';
 import AuthButton from '../auth/ui/AuthButton';
 

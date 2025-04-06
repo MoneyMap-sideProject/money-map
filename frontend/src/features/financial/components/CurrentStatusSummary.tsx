@@ -1,8 +1,7 @@
-import BottomFixedContainer from '../../../shared/ui/BottomFixedContainer';
-import InputLabel from '../../../shared/ui/InputLabel';
-import { PageTitle } from '../../../shared/ui/PageTitle';
-import ProgressButton from '../../../shared/ui/ProgressButton';
-import Footer from '../../../widgets/footer/Footer';
+import BottomFixedContainer from '@/shared/ui/bottom-fixed/BottomFixedContainer';
+import InputLabel from '@/shared/ui/InputLabel';
+import { PageTitle } from '@/shared/ui/PageTitle';
+import ProgressButton from '@/shared/ui/ProgressButton';
 import {
   FinancialButtonWrapper,
   FinancialForm,
@@ -104,7 +103,6 @@ export default function CurrentStatusSummary({
                 다음
               </ProgressButton>
             </FinancialButtonWrapper>
-            <Footer />
           </BottomFixedContainer>
         </FinancialForm>
       </FinancialSection>

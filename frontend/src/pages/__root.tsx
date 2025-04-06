@@ -1,6 +1,5 @@
-import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import Layout from '../widgets/Layout';
+import { createRootRouteWithContext } from '@tanstack/react-router';
+import RootLayout from '@/app/layouts/RootLayout';
 
 type ContextValue = {
   auth: {
@@ -9,14 +8,7 @@ type ContextValue = {
 };
 
 export const Route = createRootRouteWithContext<ContextValue>()({
-  component: () => (
-    <Layout>
-      <div>
-        <Outlet />
-        <TanStackRouterDevtools />
-      </div>
-    </Layout>
-  ),
+  component: RootLayout,
   validateSearch: (search) => {
     return {
       ...search,

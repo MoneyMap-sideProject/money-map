@@ -1,10 +1,14 @@
 import styled from 'styled-components';
-import Icon from '../../shared/ui/Icon';
+import Icon from '@/shared/ui/Icon';
 import FooterNavLink from './FooterNavLink';
+import { ForwardedRef, forwardRef } from 'react';
 
-const Footer = () => {
+const Footer = forwardRef(function Footer(
+  _,
+  ref: ForwardedRef<HTMLDivElement>,
+) {
   return (
-    <FooterWrapper>
+    <FooterWrapper ref={ref}>
       <FooterNav>
         <FooterNavLink to="/financial-input">
           <Icon type="pencil" />
@@ -21,16 +25,22 @@ const Footer = () => {
       </FooterNav>
     </FooterWrapper>
   );
-};
+});
 
 export default Footer;
 
 const FooterWrapper = styled.div`
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
   border: ${(props) => `1px solid ${props.theme.colors.grayLine}`};
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: 60px;
+  background-color: ${(props) => props.theme.colors.white};
 `;
 
 const FooterNav = styled.nav`

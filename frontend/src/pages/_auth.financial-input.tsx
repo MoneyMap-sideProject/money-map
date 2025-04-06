@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import useFunnel from '../widgets/funnel/useFunnel';
-import PageNavigator from '../widgets/PageNavigator';
+import useFunnel from '@/widgets/funnel/useFunnel';
+import PageNavigator from '@/widgets/PageNavigator';
 import CurrentStatusSummary from '../features/financial/components/CurrentStatusSummary';
 import { ChangeRate } from '../features/financial/components/ChangeRate';
 import FixedExpense from '../features/financial/components/FixedExpense';
