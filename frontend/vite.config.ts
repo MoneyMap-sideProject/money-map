@@ -16,6 +16,9 @@ export default defineConfig({
     port: 8080,
   },
   resolve: {
-    alias: [{ find: '@', replacement: '/src' }],
+    alias: [
+      { find: '@/assets', replacement: '/assets' },
+      { find: '@', replacement: '/src' },
+    ],
   },
 });
