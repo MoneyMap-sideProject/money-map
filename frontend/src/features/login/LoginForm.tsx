@@ -8,7 +8,7 @@ import {
   LoginRequestBody,
   LoginResponseBody,
 } from '@/shared/api/user/type';
-import { requestLogin } from '@/shared/api/user';
+import { login } from '@/shared/api/user';
 import { queryKey } from '@/shared/api/user/queryKey';
 import AuthForm from '../auth/ui/AuthForm';
 import InputLabel from '@/shared/ui/InputLabel';
@@ -29,9 +29,9 @@ export default function LoginForm() {
     AxiosError,
     LoginRequestBody
   >({
-    mutationFn: (body) => requestLogin(body),
+    mutationFn: (body) => login(body),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKey.signin() });
+      queryClient.invalidateQueries({ queryKey: queryKey.login() });
     },
     onError: (error) => {
       // TODO: 에러 처리
@@ -52,7 +52,7 @@ export default function LoginForm() {
   const emailError = !!errors.email;
   const navigate = useNavigate();
 
-  const _handleSubmit = async (values: FormInput) => {
+  const _login = async (values: FormInput) => {
     loginMutation.mutate(values, {
       onSuccess: () => {
         navigate({ to: '/' });
@@ -71,7 +71,7 @@ export default function LoginForm() {
   };
 
   return (
-    <AuthForm onSubmit={handleSubmit(_handleSubmit)}>
+    <AuthForm onSubmit={handleSubmit(_login)}>
       <InputLabel htmlFor="email">이메일</InputLabel>
       <Input
         type="email"

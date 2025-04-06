@@ -2,11 +2,11 @@ export type Email = string;
 export type Time = string;
 export type Id = number;
 
-export type CreateUserRequestBody = {
+export type SignUpRequestBody = {
   email: Email;
 };
 
-export type CreateUserResponseBody = {
+export type SignUpResponseBody = {
   createdAt: Time;
   email: Email;
   id: Id;
@@ -20,4 +20,11 @@ export type LoginResponseBody = {
   createdAt: Time;
   email: Email;
   id: Id;
+};
+
+export type GetProfileResponseBody = {
+  user: {
+    id: Id;
+    email: Email;
+  };
 };

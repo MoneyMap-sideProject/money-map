@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Icon from '@/shared/ui/Icon';
 import FooterNavLink from './FooterNavLink';
 import { ForwardedRef, forwardRef } from 'react';
+import LogoutButton from '@/features/logout/LogoutButton';
 
 const Footer = forwardRef(function Footer(
   _,
@@ -15,13 +16,10 @@ const Footer = forwardRef(function Footer(
           <NavLabel>재무 입력</NavLabel>
         </FooterNavLink>
         <FooterNavLink to="/analysis/income/salary">
-          <Icon type="grapo" />
+          <Icon type="graph" />
           <NavLabel>결과 분석</NavLabel>
         </FooterNavLink>
-        <FooterNavLink to="/logout">
-          <Icon type="out" />
-          <NavLabel>로그아웃</NavLabel>
-        </FooterNavLink>
+        <LogoutButton />
       </FooterNav>
     </FooterWrapper>
   );

@@ -1,6 +1,6 @@
 export const queryKey = {
   all: ['user'],
-  signup: () => [...queryKey.all, 'signup'],
-  signin: () => [...queryKey.all, 'signin'],
-  users: () => [...queryKey.all, 'users'],
+  signUp: () => [...queryKey.all, 'signUp'],
+  login: () => [...queryKey.all, 'login'],
+  user: () => [...queryKey.all, 'user'],
 } as const;
