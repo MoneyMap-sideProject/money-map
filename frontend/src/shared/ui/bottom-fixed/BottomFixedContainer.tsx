@@ -7,8 +7,6 @@ export default function BottomFixedContainer({ children }: PropsWithChildren) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  console.log('[bottomPosition]', bottomPosition);
-
   useEffect(() => {
     if (!wrapperRef.current || !containerRef.current) return;
 

@@ -17,19 +17,28 @@ export default function RootLayout() {
 
   useEffect(() => {
     // footer height를 bottomFixedProvider에 전달하여 하위 페이지에서 bottomPixedContainer를 원활하게 사용하도록 제공
-    if (footerRef.current) {
-      setFooterHeight(footerRef.current.offsetHeight);
-    }
+    if (!footerRef.current) return;
+
+    const resizeObserver = new ResizeObserver(([entry]) => {
+      const { height } = entry.target.getBoundingClientRect();
+      setFooterHeight(height);
+    });
+
+    resizeObserver.observe(footerRef.current);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
   }, []);
 
   return (
     <>
-      <BottomFixedProvider value={{ bottomPosition: footerHeight }}>
-        <Wrapper>
+      <Wrapper>
+        <BottomFixedProvider value={{ bottomPosition: footerHeight }}>
           <Outlet />
-          {isAuthPage ? null : <Footer ref={footerRef} />}
-        </Wrapper>
-      </BottomFixedProvider>
+        </BottomFixedProvider>
+        {isAuthPage ? null : <Footer ref={footerRef} />}
+      </Wrapper>
       <TanStackRouterDevtools />
     </>
   );
