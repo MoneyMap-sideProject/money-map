@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import useBottomFixedContainer from './useBottomFixedContainer';
+import { useBottomFixedContainer } from './BottomFixedContext';
 
 export default function BottomFixedContainer({ children }: PropsWithChildren) {
   const { bottomPosition } = useBottomFixedContainer();
