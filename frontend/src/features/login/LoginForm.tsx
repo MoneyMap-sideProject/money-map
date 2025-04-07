@@ -10,13 +10,11 @@ import {
 } from '@/shared/api/user/type';
 import { login } from '@/shared/api/user';
 import { queryKey } from '@/shared/api/user/queryKey';
-import AuthForm from '../auth/ui/AuthForm';
 import InputLabel from '@/shared/ui/InputLabel';
 import Input from '@/shared/ui/Input';
-import { AUTH_VALIDATION_RULES } from '../auth/constants/validationRules';
 import InputErrorMessage from '@/shared/ui/InputErrorMessage';
-import AuthButtonContainer from '../auth/ui/AuthButtonContainer';
-import AuthButton from '../auth/ui/AuthButton';
+import { AUTH_VALIDATION_RULES } from '../auth/constants/validationRules';
+import { AuthButton, AuthButtonContainer, AuthForm } from '../auth/ui/Auth';
 
 type FormInput = {
   email: Email;
@@ -47,7 +45,7 @@ export default function LoginForm() {
     defaultValues: {
       email: '',
     },
-    mode: 'onBlur',
+    mode: 'onChange',
   });
   const emailError = !!errors.email;
   const navigate = useNavigate();
