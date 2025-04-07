@@ -1,8 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
-import AuthWrapper from '../../features/auth/ui/AuthWrapper';
-import LoginForm from '../../features/login/LoginForm';
-import AuthBottomContainer from '../../features/auth/ui/AuthBottomContainer';
-import AuthText from '../../features/auth/ui/AuthText';
+import LoginForm from '@/features/login/LoginForm';
+import {
+  AuthBottomContainer,
+  AuthText,
+  AuthWrapper,
+} from '@/features/auth/ui/Auth';
 
 export const Route = createFileRoute('/auth/login')({
   component: RouteComponent,
