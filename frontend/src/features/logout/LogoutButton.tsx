@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import { queryKey } from '@/shared/api/user/queryKey';
 import { logout } from '@/shared/api/user';
@@ -13,12 +13,14 @@ export default function LogoutButton() {
     enabled: false,
   });
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const _logout = async () => {
     try {
       const result = await refetch();
       if (result.isSuccess === true) {
         navigate({ to: '/auth/login', replace: true });
+        queryClient.removeQueries({ queryKey: queryKey.user() });
       }
     } catch (error) {
       console.error(error);
