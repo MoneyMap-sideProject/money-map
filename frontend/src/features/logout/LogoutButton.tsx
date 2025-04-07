@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 export default function LogoutButton() {
   const { refetch } = useQuery({
-    queryKey: queryKey.login(),
+    queryKey: queryKey.user(),
     queryFn: logout,
     enabled: false,
   });

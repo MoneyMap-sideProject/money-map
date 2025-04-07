@@ -29,7 +29,7 @@ export default function LoginForm() {
   >({
     mutationFn: (body) => login(body),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKey.login() });
+      queryClient.invalidateQueries({ queryKey: queryKey.user() });
     },
     onError: (error) => {
       // TODO: 에러 처리
