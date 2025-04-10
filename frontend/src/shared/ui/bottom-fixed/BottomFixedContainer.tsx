@@ -2,6 +2,8 @@ import { PropsWithChildren, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import useBottomFixedContainer from './useBottomFixedContainer';
 
+const PADDING = 40;
+
 export default function BottomFixedContainer({ children }: PropsWithChildren) {
   const { bottomPosition } = useBottomFixedContainer();
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -10,10 +12,11 @@ export default function BottomFixedContainer({ children }: PropsWithChildren) {
   useEffect(() => {
     if (!wrapperRef.current || !containerRef.current) return;
 
+    const containerHeight = containerRef.current.getBoundingClientRect().height;
+
     // Fixed 컴포넌트에 의해 가려지는 부분이 없도록 height 값 추가
-    const PADDING = 40;
-    wrapperRef.current.style.height = `${bottomPosition + PADDING}px`;
-  }, []);
+    wrapperRef.current.style.height = `${bottomPosition + containerHeight + PADDING}px`;
+  }, [bottomPosition]);
 
   return (
     <div ref={wrapperRef}>
