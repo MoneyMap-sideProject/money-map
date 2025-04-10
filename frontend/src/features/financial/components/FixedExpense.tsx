@@ -9,6 +9,8 @@ import {
   FinancialSection,
 } from '../ui/Financial';
 import FinancialInputField from '../ui/FinancialInputField';
+import { sum } from '@/shared/utils/numberUtils';
+import FinancialTotalField from '../ui/FinancialTotalField';
 
 type FormInput = Record<
   | 'fixedExpenseRent'
@@ -38,7 +40,7 @@ export default function FixedExpense({
   goNext,
   setFunnelContext,
 }: Props) {
-  const { register, handleSubmit, getValues } = useForm({
+  const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       fixedExpenseRent,
       fixedExpenseCommunication,
@@ -47,10 +49,10 @@ export default function FixedExpense({
       fixedExpenseOther,
     },
   });
+  const values = watch();
+  const total = sum(...Object.values(values).map(Number));
 
   const updateFinancialFormState = () => {
-    const values = getValues();
-
     setFunnelContext(values);
     goNext();
   };
@@ -102,6 +104,10 @@ export default function FixedExpense({
         </FinancialFormRow>
 
         <BottomFixedContainer>
+          <FinancialTotalField
+            htmlFor="fixedExpenseRent fixedExpenseCommunication fixedExpenseUtilities fixedExpenseInsurance fixedExpenseOther"
+            total={total}
+          />
           <FinancialButtonWrapper>
             <ProgressButton
               type="submit"

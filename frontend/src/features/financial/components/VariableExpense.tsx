@@ -9,6 +9,8 @@ import {
 } from '../ui/Financial';
 import { useForm } from 'react-hook-form';
 import FinancialInputField from '../ui/FinancialInputField';
+import FinancialTotalField from '../ui/FinancialTotalField';
+import { sum } from '@/shared/utils/numberUtils';
 
 type FormInput = Record<
   | 'variableExpenseFood'
@@ -31,7 +33,7 @@ export default function VariableExpense({
   totalStep,
   setFunnelContext,
 }: Props) {
-  const { register, handleSubmit, getValues } = useForm({
+  const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       variableExpenseFood,
       variableExpenseTransport,
@@ -39,10 +41,10 @@ export default function VariableExpense({
       variableExpenseOther,
     },
   });
+  const values = watch();
+  const total = sum(...Object.values(values).map(Number));
 
   const updateFinancialFormState = () => {
-    const values = getValues();
-
     setFunnelContext(values);
   };
 
@@ -85,6 +87,10 @@ export default function VariableExpense({
         </FinancialFormRow>
 
         <BottomFixedContainer>
+          <FinancialTotalField
+            htmlFor="variableExpenseFood variableExpenseTransport variableExpenseTravel variableExpenseOther"
+            total={total}
+          />
           <FinancialButtonWrapper>
             <ProgressButton type="submit" total={totalStep} step={totalStep}>
               제출
