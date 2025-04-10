@@ -1,15 +1,14 @@
 import BottomFixedContainer from '@/shared/ui/bottom-fixed/BottomFixedContainer';
-import InputLabel from '@/shared/ui/InputLabel';
 import { PageTitle, PageTitleCaption } from '@/shared/ui/PageTitle';
 import ProgressButton from '@/shared/ui/ProgressButton';
 import {
   FinancialButtonWrapper,
   FinancialForm,
-  FinancialFormItem,
-  FinancialInput,
+  FinancialFormRow,
   FinancialSection,
 } from '../ui/Financial';
 import { useForm } from 'react-hook-form';
+import FinancialInputField from '../ui/FinancialInputField';
 
 type FormInput = Record<
   | 'variableExpenseFood'
@@ -56,42 +55,34 @@ export default function VariableExpense({
       </header>
 
       <FinancialForm onSubmit={handleSubmit(updateFinancialFormState)}>
-        <FinancialFormItem>
-          <div>
-            <InputLabel htmlFor="variableExpenseFood">식비</InputLabel>
-            <FinancialInput
-              type="number"
-              id="variableExpenseFood"
-              {...register('variableExpenseFood')}
-            />
-          </div>
-          <div>
-            <InputLabel htmlFor="variableExpenseTransport">교통비</InputLabel>
-            <FinancialInput
-              type="number"
-              id="variableExpenseTransport"
-              {...register('variableExpenseTransport')}
-            />
-          </div>
-        </FinancialFormItem>
-        <FinancialFormItem>
-          <div>
-            <InputLabel htmlFor="variableExpenseTravel">여행비</InputLabel>
-            <FinancialInput
-              type="number"
-              id="variableExpenseTravel"
-              {...register('variableExpenseTravel')}
-            />
-          </div>
-          <div>
-            <InputLabel htmlFor="variableExpenseOther">기타</InputLabel>
-            <FinancialInput
-              type="number"
-              id="variableExpenseOther"
-              {...register('variableExpenseOther')}
-            />
-          </div>
-        </FinancialFormItem>
+        <FinancialFormRow>
+          <FinancialInputField
+            label="식비"
+            type="number"
+            id="variableExpenseFood"
+            {...register('variableExpenseFood')}
+          />
+          <FinancialInputField
+            label="교통비"
+            type="number"
+            id="variableExpenseTransport"
+            {...register('variableExpenseTransport')}
+          />
+        </FinancialFormRow>
+        <FinancialFormRow>
+          <FinancialInputField
+            label="여행비"
+            type="number"
+            id="variableExpenseTravel"
+            {...register('variableExpenseTravel')}
+          />
+          <FinancialInputField
+            label="기타"
+            type="number"
+            id="variableExpenseOther"
+            {...register('variableExpenseOther')}
+          />
+        </FinancialFormRow>
 
         <BottomFixedContainer>
           <FinancialButtonWrapper>
