@@ -1,15 +1,16 @@
+import { useForm } from 'react-hook-form';
 import BottomFixedContainer from '@/shared/ui/bottom-fixed/BottomFixedContainer';
-import InputLabel from '@/shared/ui/InputLabel';
 import { PageTitle, PageTitleCaption } from '@/shared/ui/PageTitle';
 import ProgressButton from '@/shared/ui/ProgressButton';
 import {
   FinancialButtonWrapper,
   FinancialForm,
-  FinancialFormItem,
-  FinancialInput,
+  FinancialFormRow,
   FinancialSection,
 } from '../ui/Financial';
-import { useForm } from 'react-hook-form';
+import FinancialInputField from '../ui/FinancialInputField';
+import { sum } from '@/shared/utils/numberUtils';
+import FinancialTotalField from '../ui/FinancialTotalField';
 
 type FormInput = Record<
   | 'fixedExpenseRent'
@@ -39,7 +40,7 @@ export default function FixedExpense({
   goNext,
   setFunnelContext,
 }: Props) {
-  const { register, handleSubmit, getValues } = useForm({
+  const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       fixedExpenseRent,
       fixedExpenseCommunication,
@@ -48,10 +49,10 @@ export default function FixedExpense({
       fixedExpenseOther,
     },
   });
+  const values = watch();
+  const total = sum(...Object.values(values).map(Number));
 
   const updateFinancialFormState = () => {
-    const values = getValues();
-
     setFunnelContext(values);
     goNext();
   };
@@ -65,56 +66,48 @@ export default function FixedExpense({
       </header>
 
       <FinancialForm onSubmit={handleSubmit(updateFinancialFormState)}>
-        <FinancialFormItem>
-          <div>
-            <InputLabel htmlFor="fixedExpenseRent">월세 및 관리비</InputLabel>
-            <FinancialInput
-              type="number"
-              id="fixedExpenseRent"
-              {...register('fixedExpenseRent')}
-            />
-          </div>
-          <div>
-            <InputLabel htmlFor="fixedExpenseCommunication">통신비</InputLabel>
-            <FinancialInput
-              type="number"
-              id="fixedExpenseCommunication"
-              {...register('fixedExpenseCommunication')}
-            />
-          </div>
-        </FinancialFormItem>
-        <FinancialFormItem>
-          <div>
-            <InputLabel htmlFor="fixedExpenseUtilities">
-              전기 및 가스
-            </InputLabel>
-            <FinancialInput
-              type="number"
-              id="fixedExpenseUtilities"
-              {...register('fixedExpenseUtilities')}
-            />
-          </div>
-          <div>
-            <InputLabel htmlFor="fixedExpenseInsurance">보험</InputLabel>
-            <FinancialInput
-              type="number"
-              id="fixedExpenseInsurance"
-              {...register('fixedExpenseInsurance')}
-            />
-          </div>
-        </FinancialFormItem>
-        <FinancialFormItem>
-          <div>
-            <InputLabel htmlFor="fixedExpenseOther">기타</InputLabel>
-            <FinancialInput
-              type="number"
-              id="fixedExpenseOther"
-              {...register('fixedExpenseOther')}
-            />
-          </div>
-        </FinancialFormItem>
+        <FinancialFormRow>
+          <FinancialInputField
+            label="월세 및 관리비"
+            type="number"
+            id="fixedExpenseRent"
+            {...register('fixedExpenseRent')}
+          />
+          <FinancialInputField
+            label="통신비"
+            type="number"
+            id="fixedExpenseCommunication"
+            {...register('fixedExpenseCommunication')}
+          />
+        </FinancialFormRow>
+        <FinancialFormRow>
+          <FinancialInputField
+            label="전기 및 가스"
+            type="number"
+            id="fixedExpenseUtilities"
+            {...register('fixedExpenseUtilities')}
+          />
+          <FinancialInputField
+            label="보험"
+            type="number"
+            id="fixedExpenseInsurance"
+            {...register('fixedExpenseInsurance')}
+          />
+        </FinancialFormRow>
+        <FinancialFormRow>
+          <FinancialInputField
+            label="기타"
+            type="number"
+            id="fixedExpenseOther"
+            {...register('fixedExpenseOther')}
+          />
+        </FinancialFormRow>
 
         <BottomFixedContainer>
+          <FinancialTotalField
+            htmlFor="fixedExpenseRent fixedExpenseCommunication fixedExpenseUtilities fixedExpenseInsurance fixedExpenseOther"
+            total={total}
+          />
           <FinancialButtonWrapper>
             <ProgressButton
               type="submit"
