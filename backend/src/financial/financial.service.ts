@@ -1,5 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { FinancialInputDto } from './financial.dto';
+import { FinancialData } from './entities/financial_data.entity';
 import computeMonthlyPayAfterTax from 'src/utils/calculate';
 
 type AssetsPerAge = {
@@ -23,6 +26,64 @@ type AssetsPerAge = {
 
 @Injectable()
 export class FinancialService {
+  constructor(
+    @InjectRepository(FinancialData)
+    private readonly financialDataRepository: Repository<FinancialData>,
+  ) {}
+
+  async calculateAndSaveLifetimeAssets(
+    input: FinancialInputDto,
+    userId: number,
+  ) {
+    const results = this.calculateLifetimeAssets(input);
+
+    // 기존 데이터가 있는지 확인
+    let financialData = await this.financialDataRepository.findOne({
+      where: { user_id: userId },
+    });
+
+    // 데이터가 없으면 새로 생성, 있으면 업데이트
+    if (!financialData) {
+      financialData = this.financialDataRepository.create({
+        user_id: userId,
+        current_user: input.current_user,
+        annual_change_rate: input.annual_change_rate,
+        monthly_fixed_cost: input.monthly_fixed_cost,
+        monthly_variable_cost: input.monthly_variable_cost,
+        results: results,
+      });
+    } else {
+      financialData.current_user = input.current_user;
+      financialData.annual_change_rate = input.annual_change_rate;
+      financialData.monthly_fixed_cost = input.monthly_fixed_cost;
+      financialData.monthly_variable_cost = input.monthly_variable_cost;
+      financialData.results = results;
+    }
+
+    await this.financialDataRepository.save(financialData);
+    return results;
+  }
+
+  async getUserFinancialData(userId: number) {
+    const financialData = await this.financialDataRepository.findOne({
+      where: { user_id: userId },
+    });
+
+    if (!financialData) {
+      throw new NotFoundException(
+        '해당 사용자의 재무 데이터를 찾을 수 없습니다.',
+      );
+    }
+
+    return {
+      current_user: financialData.current_user,
+      annual_change_rate: financialData.annual_change_rate,
+      monthly_fixed_cost: financialData.monthly_fixed_cost,
+      monthly_variable_cost: financialData.monthly_variable_cost,
+      results: financialData.results,
+    };
+  }
+
   calculateLifetimeAssets(input: FinancialInputDto) {
     const {
       current_user,

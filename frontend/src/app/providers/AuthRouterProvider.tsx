@@ -44,8 +44,8 @@ export default function AuthRouterProvider() {
         isLogin: true,
       }
     : {
-        email: null,
-        isLogin: false,
+        email: 'test',
+        isLogin: true,
       };
 
   return <RouterProvider router={router} context={{ auth }} />;

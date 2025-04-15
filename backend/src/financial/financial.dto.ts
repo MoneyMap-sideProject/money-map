@@ -3,7 +3,7 @@ import { IsNumber, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 
 @ApiExtraModels()
-class CurrentUserDto {
+export class CurrentUserDto {
   @ApiProperty({ example: 30, description: '현재 연령' })
   @IsNumber()
   age: number;
@@ -22,7 +22,7 @@ class CurrentUserDto {
 }
 
 @ApiExtraModels()
-class AnnualChangeRateDto {
+export class AnnualChangeRateDto {
   @ApiProperty({ example: 3, description: '연봉 상승률 (%)' })
   @IsNumber()
   salary: number;
@@ -37,7 +37,7 @@ class AnnualChangeRateDto {
 }
 
 @ApiExtraModels()
-class MonthlyFixedCostDto {
+export class MonthlyFixedCostDto {
   @ApiProperty({ example: 1000000, description: '월세 (KRW)' })
   @IsNumber()
   rent: number;
@@ -56,7 +56,7 @@ class MonthlyFixedCostDto {
 }
 
 @ApiExtraModels()
-class MonthlyVariableCostDto {
+export class MonthlyVariableCostDto {
   @ApiProperty({ example: 500000, description: '식비 (KRW)' })
   @IsNumber()
   food: number;

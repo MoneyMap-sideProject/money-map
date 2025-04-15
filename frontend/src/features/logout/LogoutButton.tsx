@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import { queryKey } from '@/shared/api/user/queryKey';
 import { logout } from '@/shared/api/user';
-import OutIcon from '@/assets/svgs/out.svg?react';
+import OutIcon from '@/../assets/svgs/out.svg';
 import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'react-toastify';
 

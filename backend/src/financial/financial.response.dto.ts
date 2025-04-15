@@ -1,4 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  CurrentUserDto,
+  AnnualChangeRateDto,
+  MonthlyFixedCostDto,
+  MonthlyVariableCostDto,
+} from './financial.dto';
 
 class CurrentStateDto {
   @ApiProperty({ example: 30, description: '현재 나이' })
@@ -46,8 +52,32 @@ export class AssetsPerAgeDto {
 
 export class FinancialResponseDto {
   @ApiProperty({
+    description: '현재 사용자 정보',
+    type: CurrentUserDto,
+  })
+  current_user?: CurrentUserDto;
+
+  @ApiProperty({
+    description: '연간 변화율 정보',
+    type: AnnualChangeRateDto,
+  })
+  annual_change_rate?: AnnualChangeRateDto;
+
+  @ApiProperty({
+    description: '월별 고정 비용 정보',
+    type: MonthlyFixedCostDto,
+  })
+  monthly_fixed_cost?: MonthlyFixedCostDto;
+
+  @ApiProperty({
+    description: '월별 변동 비용 정보',
+    type: MonthlyVariableCostDto,
+  })
+  monthly_variable_cost?: MonthlyVariableCostDto;
+
+  @ApiProperty({
     description: '나이별 자산 변화 데이터',
     type: [AssetsPerAgeDto],
   })
-  assetsPerAge: AssetsPerAgeDto[];
+  results: AssetsPerAgeDto[];
 }
