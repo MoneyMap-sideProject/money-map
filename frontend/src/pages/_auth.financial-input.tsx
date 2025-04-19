@@ -52,7 +52,7 @@ function RouteComponent() {
 
   return (
     <>
-      <PageNavigator disabledForward />
+      <PageNavigator showForward={false} />
 
       <Funnel>
         <FunnelStep name="현재 상황 정리">
