@@ -12,11 +12,11 @@ const Footer = forwardRef(function Footer(
     <FooterWrapper ref={ref}>
       <FooterNav>
         <FooterNavLink to="/financial-input">
-          <Icon type="pencil" />
+          <Icon type="pencil" width="20px" height="20px" />
           <NavLabel>재무 입력</NavLabel>
         </FooterNavLink>
         <FooterNavLink to="/analysis/income/salary">
-          <Icon type="graph" />
+          <Icon type="graph" width="20px" height="20px" />
           <NavLabel>결과 분석</NavLabel>
         </FooterNavLink>
         <LogoutButton />
