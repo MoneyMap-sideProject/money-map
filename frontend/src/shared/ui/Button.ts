@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const AuthButton = styled.button`
+const Button = styled.button`
   width: 100%;
   height: 48px;
   padding: 0 16px;
@@ -17,4 +17,4 @@ const AuthButton = styled.button`
   }
 `;
 
-export default AuthButton;
+export default Button;

@@ -16,7 +16,7 @@ import Input from '@/shared/ui/Input';
 import { AUTH_VALIDATION_RULES } from '../auth/constants/validationRules';
 import InputErrorMessage from '@/shared/ui/InputErrorMessage';
 import AuthButtonContainer from '../auth/ui/AuthButtonContainer';
-import AuthButton from '../auth/ui/AuthButton';
+import Button from '../../shared/ui/Button';
 
 type FormInput = {
   email: Email;
@@ -87,7 +87,7 @@ export default function SignUpForm() {
         <InputErrorMessage>{errors.email?.message}</InputErrorMessage>
       )}
       <AuthButtonContainer>
-        <AuthButton disabled={emailError}>회원가입</AuthButton>
+        <Button disabled={emailError}>회원가입</Button>
       </AuthButtonContainer>
     </AuthForm>
   );
