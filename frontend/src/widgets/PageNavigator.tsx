@@ -29,12 +29,12 @@ export default function PageNavigator({
     <NavigatorContainer>
       {showBack ? (
         <PrevButton onClick={handleGoBack} disabled={disabledBack}>
-          <Icon type="chevronLeft" />
+          <Icon type="chevron-left" />
         </PrevButton>
       ) : null}
       {showForward ? (
         <ForwardButton onClick={handleGoForward} disabled={disabledForward}>
-          <Icon type="chevronRight" />
+          <Icon type="chevron-right" />
         </ForwardButton>
       ) : null}
     </NavigatorContainer>
