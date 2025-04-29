@@ -10,13 +10,12 @@ import {
 } from '@/shared/api/user/type';
 import { signUp } from '@/shared/api/user';
 import { queryKey } from '@/shared/api/user/queryKey';
-import AuthForm from '../auth/ui/AuthForm';
 import InputLabel from '@/shared/ui/InputLabel';
 import Input from '@/shared/ui/Input';
-import { AUTH_VALIDATION_RULES } from '../auth/constants/validationRules';
 import InputErrorMessage from '@/shared/ui/InputErrorMessage';
-import AuthButtonContainer from '../auth/ui/AuthButtonContainer';
-import Button from '../../shared/ui/Button';
+import Button from '@/shared/ui/Button';
+import { AUTH_VALIDATION_RULES } from '../auth/constants/validationRules';
+import { AuthButtonContainer, AuthForm } from '../auth/ui/Auth';
 
 type FormInput = {
   email: Email;
