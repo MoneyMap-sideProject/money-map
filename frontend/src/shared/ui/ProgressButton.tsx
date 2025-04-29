@@ -17,7 +17,10 @@ export default function ProgressButton({
 
   return (
     <Button {...props}>
-      <ButtonText>{children}</ButtonText>
+      <ButtonText $ratio={ratio}>{children}</ButtonText>
+      <ButtonTextOveray $ratio={ratio} aria-hidden={true}>
+        {children}
+      </ButtonTextOveray>
       <ButtonOverlay $ratio={ratio} />
     </Button>
   );
@@ -34,16 +37,27 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const ButtonText = styled.span`
+const ButtonText = styled.span<{ $ratio: number }>`
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 1;
+  width: 100%;
   font-weight: 600;
-  color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.black};
   transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
-  filter: contrast(0.5);
+  -webkit-mask: ${(props) =>
+    `linear-gradient(to right, #c8e64b ${props.$ratio}%, transparent ${props.$ratio}%)`};
+  mask: ${(props) =>
+    `linear-gradient(to right, #c8e64b ${props.$ratio}%, transparent ${props.$ratio}%)`};
+`;
+
+const ButtonTextOveray = styled(ButtonText)`
+  color: ${(props) => props.theme.colors.white};
+  -webkit-mask: ${(props) =>
+    `linear-gradient(to right, transparent ${props.$ratio}%, #000 ${props.$ratio}%)`};
+  mask: ${(props) =>
+    `linear-gradient(to right, transparent ${props.$ratio}%, #000 ${props.$ratio}%)`};
 `;
 
 const ButtonOverlay = styled.div<{ $ratio: number }>`

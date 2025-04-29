@@ -13,8 +13,9 @@ import { queryKey } from '@/shared/api/user/queryKey';
 import InputLabel from '@/shared/ui/InputLabel';
 import Input from '@/shared/ui/Input';
 import InputErrorMessage from '@/shared/ui/InputErrorMessage';
+import Button from '@/shared/ui/Button';
 import { AUTH_VALIDATION_RULES } from '../auth/constants/validationRules';
-import { AuthButton, AuthButtonContainer, AuthForm } from '../auth/ui/Auth';
+import { AuthButtonContainer, AuthForm } from '../auth/ui/Auth';
 
 type FormInput = {
   email: Email;
@@ -90,7 +91,7 @@ export default function LoginForm() {
         <InputErrorMessage>{errors.email?.message}</InputErrorMessage>
       )}
       <AuthButtonContainer>
-        <AuthButton disabled={emailError}>로그인</AuthButton>
+        <Button disabled={emailError}>로그인</Button>
       </AuthButtonContainer>
     </AuthForm>
   );

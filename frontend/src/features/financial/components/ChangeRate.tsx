@@ -1,15 +1,14 @@
 import BottomFixedContainer from '@/shared/ui/bottom-fixed/BottomFixedContainer';
-import InputLabel from '@/shared/ui/InputLabel';
 import { PageTitle } from '@/shared/ui/PageTitle';
 import ProgressButton from '@/shared/ui/ProgressButton';
 import {
   FinancialButtonWrapper,
   FinancialForm,
-  FinancialFormItem,
-  FinancialInput,
+  FinancialFormRow,
   FinancialSection,
 } from '../ui/Financial';
 import { useForm } from 'react-hook-form';
+import FinancialInputField from '../ui/FinancialInputField';
 
 type FormInput = Record<
   'salaryGrowthRate' | 'inflationRate' | 'investmentGrowthRate',
@@ -55,34 +54,28 @@ export function ChangeRate({
       </header>
 
       <FinancialForm onSubmit={handleSubmit(updateFinancialFormState)}>
-        <FinancialFormItem>
-          <div>
-            <InputLabel htmlFor="salaryGrowthRate">연봉 상승률</InputLabel>
-            <FinancialInput
-              type="number"
-              id="salaryGrowthRate"
-              {...register('salaryGrowthRate')}
-            />
-          </div>
-          <div>
-            <InputLabel htmlFor="inflationRate">물가 상승률</InputLabel>
-            <FinancialInput
-              type="number"
-              id="inflationRate"
-              {...register('inflationRate')}
-            />
-          </div>
-        </FinancialFormItem>
-        <FinancialFormItem>
-          <div>
-            <InputLabel htmlFor="investmentGrowthRate">투자 상승률</InputLabel>
-            <FinancialInput
-              type="number"
-              id="investmentGrowthRate"
-              {...register('investmentGrowthRate')}
-            />
-          </div>
-        </FinancialFormItem>
+        <FinancialFormRow>
+          <FinancialInputField
+            label="연봉 상승률"
+            type="number"
+            id="salaryGrowthRate"
+            {...register('salaryGrowthRate')}
+          />
+          <FinancialInputField
+            label="물가 상승률"
+            type="number"
+            id="inflationRate"
+            {...register('inflationRate')}
+          />
+        </FinancialFormRow>
+        <FinancialFormRow>
+          <FinancialInputField
+            label="투자 상승률"
+            type="number"
+            id="investmentGrowthRate"
+            {...register('investmentGrowthRate')}
+          />
+        </FinancialFormRow>
 
         <BottomFixedContainer>
           <FinancialButtonWrapper>
