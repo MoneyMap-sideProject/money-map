@@ -3,11 +3,15 @@ import { useRouter } from '@tanstack/react-router';
 import Icon from '@/shared/ui/Icon';
 
 type Props = {
+  showBack?: boolean;
+  showForward?: boolean;
   disabledBack?: boolean;
   disabledForward?: boolean;
 };
 
 export default function PageNavigator({
+  showBack = true,
+  showForward = true,
   disabledBack = false,
   disabledForward = false,
 }: Props) {
@@ -23,12 +27,16 @@ export default function PageNavigator({
 
   return (
     <NavigatorContainer>
-      <button onClick={handleGoBack} disabled={disabledBack}>
-        <Icon type="chevron-left" />
-      </button>
-      <button onClick={handleGoForward} disabled={disabledForward}>
-        <Icon type="chevron-right" />
-      </button>
+      {showBack ? (
+        <PrevButton onClick={handleGoBack} disabled={disabledBack}>
+          <Icon type="chevron-left" />
+        </PrevButton>
+      ) : null}
+      {showForward ? (
+        <ForwardButton onClick={handleGoForward} disabled={disabledForward}>
+          <Icon type="chevron-right" />
+        </ForwardButton>
+      ) : null}
     </NavigatorContainer>
   );
 }
@@ -45,21 +53,22 @@ const NavigatorContainer = styled.nav`
   width: 100%;
   padding: 20px 0;
   background-color: ${(props) => props.theme.colors.white};
+`;
 
-  button {
-    display: inline-flex;
-  }
+const Button = styled.button`
+  display: inline-flex;
 
-  button:first-child {
-    transform: translateX(-7px);
+  &:disabled {
+    color: ${(props) => props.theme.colors.grayMiddle};
+    cursor: not-allowed;
   }
+`;
 
-  button:last-child {
-    margin-left: auto;
-    transform: translateX(7px);
-  }
+const PrevButton = styled(Button)`
+  transform: translateX(-7px);
+`;
 
-  button:disabled {
-    display: none;
-  }
+const ForwardButton = styled(Button)`
+  margin-left: auto;
+  transform: translateX(7px);
 `;
