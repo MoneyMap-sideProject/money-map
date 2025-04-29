@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Input from '@/shared/ui/Input';
 
 export const FinancialSection = styled.section`
   margin-top: 20px;
@@ -12,18 +11,11 @@ export const FinancialForm = styled.form`
   margin-top: 40px;
 `;
 
-export const FinancialFormItem = styled.div`
-  display: flex;
+export const FinancialFormRow = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   gap: 16px;
   width: 100%;
-
-  & > div {
-    width: 100%;
-  }
-`;
-
-export const FinancialInput = styled(Input)`
-  text-align: right;
 `;
 
 export const FinancialButtonWrapper = styled.div`

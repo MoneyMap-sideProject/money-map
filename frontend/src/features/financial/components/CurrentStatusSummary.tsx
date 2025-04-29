@@ -1,15 +1,14 @@
 import BottomFixedContainer from '@/shared/ui/bottom-fixed/BottomFixedContainer';
-import InputLabel from '@/shared/ui/InputLabel';
 import { PageTitle } from '@/shared/ui/PageTitle';
 import ProgressButton from '@/shared/ui/ProgressButton';
 import {
   FinancialButtonWrapper,
   FinancialForm,
-  FinancialFormItem,
-  FinancialInput,
+  FinancialFormRow,
   FinancialSection,
 } from '../ui/Financial';
 import { useForm } from 'react-hook-form';
+import FinancialInputField from '../ui/FinancialInputField';
 
 type FormInput = Record<
   'age' | 'salary' | 'assets' | 'investmentRatio',
@@ -58,40 +57,36 @@ export default function CurrentStatusSummary({
         </header>
 
         <FinancialForm onSubmit={handleSubmit(updateFinancialFormState)}>
-          <FinancialFormItem>
-            <div>
-              <InputLabel htmlFor="age">나이</InputLabel>
-              <FinancialInput type="number" id="age" {...register('age')} />
-            </div>
-            <div>
-              <InputLabel htmlFor="salary">연봉</InputLabel>
-              <FinancialInput
-                type="number"
-                id="salary"
-                {...register('salary')}
-              />
-            </div>
-          </FinancialFormItem>
-          <FinancialFormItem>
-            <div>
-              <InputLabel htmlFor="assets">자산</InputLabel>
-              <FinancialInput
-                type="number"
-                id="assets"
-                {...register('assets')}
-              />
-            </div>
-          </FinancialFormItem>
-          <FinancialFormItem>
-            <div>
-              <InputLabel htmlFor="investmentRatio">투자 비중</InputLabel>
-              <FinancialInput
-                type="number"
-                id="investmentRatio"
-                {...register('investmentRatio')}
-              />
-            </div>
-          </FinancialFormItem>
+          <FinancialFormRow>
+            <FinancialInputField
+              label="나이"
+              type="number"
+              id="age"
+              {...register('age')}
+            />
+            <FinancialInputField
+              label="연봉"
+              type="number"
+              id="salary"
+              {...register('salary')}
+            />
+          </FinancialFormRow>
+          <FinancialFormRow>
+            <FinancialInputField
+              label="자산"
+              type="number"
+              id="assets"
+              {...register('assets')}
+            />
+          </FinancialFormRow>
+          <FinancialFormRow>
+            <FinancialInputField
+              label="투자 비중"
+              type="number"
+              id="investmentRatio"
+              {...register('investmentRatio')}
+            />
+          </FinancialFormRow>
 
           <BottomFixedContainer>
             <FinancialButtonWrapper>
