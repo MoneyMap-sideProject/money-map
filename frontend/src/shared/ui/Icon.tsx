@@ -5,6 +5,7 @@ import {
   Suspense,
   SVGProps,
 } from 'react';
+import styled from 'styled-components';
 
 // SVG 파일들 가져오기
 const svgFiles = import.meta.glob<{
@@ -32,14 +33,29 @@ const LazyIcons = Object.fromEntries(
 
 type Props = {
   type: IconType;
+  width?: string;
+  height?: string;
+  color?: string;
 };
 
-export default function Icon({ type }: Props) {
+export default function Icon({ type, ...props }: Props) {
   const IconComponent = LazyIcons[type];
 
   return (
-    <Suspense fallback={<div className="icon-loading" />}>
-      <IconComponent />
+    <Suspense
+      fallback={<IconFallback $width={props.width} $height={props.height} />}
+    >
+      <IconComponent {...props} />
     </Suspense>
   );
 }
+
+const IconFallback = styled.div<{
+  $width?: string;
+  $height?: string;
+}>`
+  display: inline-block;
+  width: ${(props) => props.$width ?? 'auto'};
+  height: ${(props) => props.$height ?? 'auto'};
+  background-color: ${(props) => props.theme.colors.grayLine};
+`;
