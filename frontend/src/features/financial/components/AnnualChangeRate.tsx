@@ -10,41 +10,29 @@ import {
 import { useForm } from 'react-hook-form';
 import FinancialInputField from '../ui/FinancialInputField';
 
-type FormInput = Record<
-  'salaryGrowthRate' | 'inflationRate' | 'investmentGrowthRate',
-  number
->;
+type FormInput = Record<'salary' | 'inflation' | 'investment', number>;
 
-type Props = FormInput & {
+type Props = {
+  defaultValues: FormInput;
   totalStep: number;
   currentStep: string;
   currentStepIndex: number;
-  goNext: () => void;
-  setFunnelContext: (context: FormInput) => void;
+  onNext: (values: FormInput) => void;
 };
 
-export function ChangeRate({
-  salaryGrowthRate,
-  inflationRate,
-  investmentGrowthRate,
+export default function AnnualChangeRate({
+  defaultValues,
   currentStepIndex,
   totalStep,
-  goNext,
-  setFunnelContext,
+  onNext,
 }: Props) {
   const { register, handleSubmit, getValues } = useForm({
-    defaultValues: {
-      salaryGrowthRate,
-      inflationRate,
-      investmentGrowthRate,
-    },
+    defaultValues,
   });
 
   const updateFinancialFormState = () => {
     const values = getValues();
-
-    setFunnelContext(values);
-    goNext();
+    onNext(values);
   };
 
   return (
@@ -58,22 +46,22 @@ export function ChangeRate({
           <FinancialInputField
             label="연봉 상승률"
             type="number"
-            id="salaryGrowthRate"
-            {...register('salaryGrowthRate')}
+            id="salary"
+            {...register('salary')}
           />
           <FinancialInputField
             label="물가 상승률"
             type="number"
-            id="inflationRate"
-            {...register('inflationRate')}
+            id="inflation"
+            {...register('inflation')}
           />
         </FinancialFormRow>
         <FinancialFormRow>
           <FinancialInputField
             label="투자 상승률"
             type="number"
-            id="investmentGrowthRate"
-            {...register('investmentGrowthRate')}
+            id="investment"
+            {...register('investment')}
           />
         </FinancialFormRow>
 
