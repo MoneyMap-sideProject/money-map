@@ -10,43 +10,29 @@ import {
 import { useForm } from 'react-hook-form';
 import FinancialInputField from '../ui/FinancialInputField';
 
-type FormInput = Record<
-  'age' | 'salary' | 'assets' | 'investmentRatio',
-  number
->;
+type FormInput = Record<'age' | 'salary' | 'assets' | 'investRate', number>;
 
-type Props = FormInput & {
+type Props = {
+  defaultValues: FormInput;
   totalStep: number;
   currentStep: string;
   currentStepIndex: number;
-  goNext: () => void;
-  setFunnelContext: (context: FormInput) => void;
+  onNext: (values: FormInput) => void;
 };
 
-export default function CurrentStatusSummary({
-  age,
-  salary,
-  assets,
-  investmentRatio,
+export default function CurrentUser({
+  defaultValues,
   currentStepIndex,
   totalStep,
-  goNext,
-  setFunnelContext,
+  onNext,
 }: Props) {
   const { register, handleSubmit, getValues } = useForm({
-    defaultValues: {
-      age,
-      salary,
-      assets,
-      investmentRatio,
-    },
+    defaultValues,
   });
 
   const updateFinancialFormState = () => {
     const values = getValues();
-
-    setFunnelContext(values);
-    goNext();
+    onNext(values);
   };
 
   return (
@@ -83,8 +69,8 @@ export default function CurrentStatusSummary({
             <FinancialInputField
               label="투자 비중"
               type="number"
-              id="investmentRatio"
-              {...register('investmentRatio')}
+              id="investRate"
+              {...register('investRate')}
             />
           </FinancialFormRow>
 
