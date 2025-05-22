@@ -12,40 +12,27 @@ import FinancialInputField from '../ui/FinancialInputField';
 import FinancialTotalField from '../ui/FinancialTotalField';
 import { sum } from '@/shared/utils/numberUtils';
 
-type FormInput = Record<
-  | 'variableExpenseFood'
-  | 'variableExpenseTransport'
-  | 'variableExpenseTravel'
-  | 'variableExpenseOther',
-  number
->;
+type FormInput = Record<'food' | 'travel' | 'transportation' | 'etc', number>;
 
-type Props = FormInput & {
+type Props = {
+  defaultValues: FormInput;
   totalStep: number;
-  setFunnelContext: (context: FormInput) => void;
+  onSubmit: (values: FormInput) => void;
 };
 
-export default function VariableExpense({
-  variableExpenseFood,
-  variableExpenseTransport,
-  variableExpenseTravel,
-  variableExpenseOther,
+export default function MonthlyVariableCost({
+  defaultValues,
   totalStep,
-  setFunnelContext,
+  onSubmit,
 }: Props) {
   const { register, handleSubmit, watch } = useForm({
-    defaultValues: {
-      variableExpenseFood,
-      variableExpenseTransport,
-      variableExpenseTravel,
-      variableExpenseOther,
-    },
+    defaultValues,
   });
   const values = watch();
   const total = sum(...Object.values(values).map(Number));
 
   const updateFinancialFormState = () => {
-    setFunnelContext(values);
+    onSubmit(values);
   };
 
   return (
@@ -61,34 +48,34 @@ export default function VariableExpense({
           <FinancialInputField
             label="식비"
             type="number"
-            id="variableExpenseFood"
-            {...register('variableExpenseFood')}
+            id="variableCostFood"
+            {...register('food')}
           />
           <FinancialInputField
             label="교통비"
             type="number"
-            id="variableExpenseTransport"
-            {...register('variableExpenseTransport')}
+            id="variableCostTravel"
+            {...register('travel')}
           />
         </FinancialFormRow>
         <FinancialFormRow>
           <FinancialInputField
             label="여행비"
             type="number"
-            id="variableExpenseTravel"
-            {...register('variableExpenseTravel')}
+            id="variableCostTransportation"
+            {...register('transportation')}
           />
           <FinancialInputField
             label="기타"
             type="number"
-            id="variableExpenseOther"
-            {...register('variableExpenseOther')}
+            id="variableCostEtc"
+            {...register('etc')}
           />
         </FinancialFormRow>
 
         <BottomFixedContainer>
           <FinancialTotalField
-            htmlFor="variableExpenseFood variableExpenseTransport variableExpenseTravel variableExpenseOther"
+            htmlFor="variableCostFood variableCostTravel variableCostTransportation variableCostEtc"
             total={total}
           />
           <FinancialButtonWrapper>

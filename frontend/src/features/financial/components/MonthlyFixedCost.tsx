@@ -12,49 +12,30 @@ import FinancialInputField from '../ui/FinancialInputField';
 import { sum } from '@/shared/utils/numberUtils';
 import FinancialTotalField from '../ui/FinancialTotalField';
 
-type FormInput = Record<
-  | 'fixedExpenseRent'
-  | 'fixedExpenseCommunication'
-  | 'fixedExpenseUtilities'
-  | 'fixedExpenseInsurance'
-  | 'fixedExpenseOther',
-  number
->;
+type FormInput = Record<'rent' | 'communication' | 'insurance' | 'etc', number>;
 
-type Props = FormInput & {
+type Props = {
+  defaultValues: FormInput;
   totalStep: number;
   currentStep: string;
   currentStepIndex: number;
-  goNext: () => void;
-  setFunnelContext: (context: FormInput) => void;
+  onNext: (values: FormInput) => void;
 };
 
-export default function FixedExpense({
-  fixedExpenseRent,
-  fixedExpenseCommunication,
-  fixedExpenseUtilities,
-  fixedExpenseInsurance,
-  fixedExpenseOther,
+export default function MonthlyFixedCost({
+  defaultValues,
   currentStepIndex,
   totalStep,
-  goNext,
-  setFunnelContext,
+  onNext,
 }: Props) {
   const { register, handleSubmit, watch } = useForm({
-    defaultValues: {
-      fixedExpenseRent,
-      fixedExpenseCommunication,
-      fixedExpenseUtilities,
-      fixedExpenseInsurance,
-      fixedExpenseOther,
-    },
+    defaultValues,
   });
   const values = watch();
   const total = sum(...Object.values(values).map(Number));
 
   const updateFinancialFormState = () => {
-    setFunnelContext(values);
-    goNext();
+    onNext(values);
   };
 
   return (
@@ -71,27 +52,21 @@ export default function FixedExpense({
             label="월세 및 관리비"
             type="number"
             id="fixedExpenseRent"
-            {...register('fixedExpenseRent')}
+            {...register('rent')}
           />
           <FinancialInputField
             label="통신비"
             type="number"
             id="fixedExpenseCommunication"
-            {...register('fixedExpenseCommunication')}
+            {...register('communication')}
           />
         </FinancialFormRow>
         <FinancialFormRow>
           <FinancialInputField
-            label="전기 및 가스"
-            type="number"
-            id="fixedExpenseUtilities"
-            {...register('fixedExpenseUtilities')}
-          />
-          <FinancialInputField
             label="보험"
             type="number"
             id="fixedExpenseInsurance"
-            {...register('fixedExpenseInsurance')}
+            {...register('insurance')}
           />
         </FinancialFormRow>
         <FinancialFormRow>
@@ -99,7 +74,7 @@ export default function FixedExpense({
             label="기타"
             type="number"
             id="fixedExpenseOther"
-            {...register('fixedExpenseOther')}
+            {...register('etc')}
           />
         </FinancialFormRow>
 
