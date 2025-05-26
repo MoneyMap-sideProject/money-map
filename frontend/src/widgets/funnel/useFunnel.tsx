@@ -92,9 +92,12 @@ export default function useFunnel<T, C extends Context>({
       toast('잘못된 경로 접근입니다.');
       setCurrentStep(steps[0]);
       setFunnelContext(defaultContext);
-      setIsDirty(false);
+      setIsDirty(true);
       navigate({
         to: location.pathname,
+        search: {
+          [SEARCH_PARAM_KEY]: steps[START_STEP_INDEX],
+        },
         replace: true,
       });
       return;
