@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useRouter } from '@tanstack/react-router';
-import Icon from '@/shared/ui/Icon';
+import ChevronLeftIcon from '../../assets/svgs/chevron-left.svg?react';
+import ChevronRightIcon from '../../assets/svgs/chevron-right.svg?react';
 
 type Props = {
   showBack?: boolean;
@@ -29,12 +30,12 @@ export default function PageNavigator({
     <NavigatorContainer>
       {showBack ? (
         <PrevButton onClick={handleGoBack} disabled={disabledBack}>
-          <Icon type="chevron-left" />
+          <ChevronLeftIcon />
         </PrevButton>
       ) : null}
       {showForward ? (
         <ForwardButton onClick={handleGoForward} disabled={disabledForward}>
-          <Icon type="chevron-right" />
+          <ChevronRightIcon />
         </ForwardButton>
       ) : null}
     </NavigatorContainer>
