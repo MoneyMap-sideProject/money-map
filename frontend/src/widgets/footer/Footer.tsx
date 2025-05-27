@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import Icon from '@/shared/ui/Icon';
 import FooterNavLink from './FooterNavLink';
 import { ForwardedRef, forwardRef } from 'react';
 import LogoutButton from '@/features/logout/LogoutButton';
+import PencilIcon from '../../../assets/svgs/pencil.svg?react';
+import GraphIcon from '../../../assets/svgs/graph.svg?react';
 
 const Footer = forwardRef(function Footer(
   _,
@@ -12,11 +13,11 @@ const Footer = forwardRef(function Footer(
     <FooterWrapper ref={ref}>
       <FooterNav>
         <FooterNavLink to="/financial-input">
-          <Icon type="pencil" width="20px" height="20px" />
+          <PencilIcon />
           <NavLabel>재무 입력</NavLabel>
         </FooterNavLink>
         <FooterNavLink to="/analysis/income/salary">
-          <Icon type="graph" width="20px" height="20px" />
+          <GraphIcon />
           <NavLabel>결과 분석</NavLabel>
         </FooterNavLink>
         <LogoutButton />

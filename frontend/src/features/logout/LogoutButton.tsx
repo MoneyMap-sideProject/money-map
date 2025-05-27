@@ -4,7 +4,7 @@ import { queryKey } from '@/shared/api/user/queryKey';
 import { logout } from '@/shared/api/user';
 import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'react-toastify';
-import Icon from '@/shared/ui/Icon';
+import OutIcon from '../../../assets/svgs/out.svg?react';
 
 export default function LogoutButton() {
   const { refetch } = useQuery({
@@ -30,7 +30,7 @@ export default function LogoutButton() {
 
   return (
     <Button type="button" onClick={_logout}>
-      <Icon type="out" width="20px" height="20px" />
+      <OutIcon type="out" width="20px" height="20px" />
       로그아웃
     </Button>
   );
